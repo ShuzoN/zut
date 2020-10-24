@@ -8,7 +8,7 @@ exports.handler = async (event, context, callback) => {
     {}
   );
 
-  if (getLocationIdByName(body.text) === undefined) {
+  if (map.getLocationIdByName(body.text) === undefined) {
     console.info("error: 利用できない地域です");
     return {
       response_type: "in_channel",
@@ -27,7 +27,7 @@ exports.handler = async (event, context, callback) => {
   }
 
   const url =
-    "https://zutool.jp/api/getweatherstatus/" + getLocationIdByName(body.text);
+    "https://zutool.jp/api/getweatherstatus/" + map.getLocationIdByName(body.text);
   console.info("url: " + url);
 
   return await fetchZutool(url).then((res) => {
