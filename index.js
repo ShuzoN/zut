@@ -1,4 +1,5 @@
 const https = require("https");
+const map = require("map");
 
 exports.handler = async (event, context, callback) => {
   const paramString = event["body-json"]["body"];
@@ -99,34 +100,4 @@ function getPressureLevelIcon(pressureLevelType) {
   }
 
   return ":innocent:";
-}
-
-var locationMap = new Map();
-locationMap.set("千代田", 13101);
-locationMap.set("中央", 13102);
-locationMap.set("港", 13103);
-locationMap.set("新宿", 13104);
-locationMap.set("文京", 13105);
-locationMap.set("台東", 13106);
-locationMap.set("墨田", 13107);
-locationMap.set("江東", 13108);
-locationMap.set("品川", 13109);
-locationMap.set("目黒", 13110);
-locationMap.set("大田", 13111);
-locationMap.set("世田谷", 13112);
-locationMap.set("渋谷", 13113);
-locationMap.set("中野", 13114);
-locationMap.set("杉並", 13115);
-locationMap.set("豊島", 13116);
-locationMap.set("北", 13117);
-locationMap.set("荒川", 13118);
-locationMap.set("板橋", 13119);
-locationMap.set("練馬", 13120);
-locationMap.set("足立", 13121);
-locationMap.set("葛飾", 13122);
-locationMap.set("江戸川", 13123);
-locationMap.set("沖縄", 47211);
-
-function getLocationIdByName(locationName) {
-  return locationMap.get(locationName);
 }
