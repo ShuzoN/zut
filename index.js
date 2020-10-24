@@ -1,5 +1,5 @@
 const https = require("https");
-const map = require("map");
+const locations = require("locations");
 
 exports.handler = async (event, context, callback) => {
   const paramString = event["body-json"]["body"];
@@ -8,7 +8,7 @@ exports.handler = async (event, context, callback) => {
     {}
   );
 
-  if (map.getLocationIdByName(body.text) === undefined) {
+  if (locations.getIdByName(body.text) === undefined) {
     console.info("error: 利用できない地域です");
     return {
       response_type: "in_channel",
@@ -27,7 +27,7 @@ exports.handler = async (event, context, callback) => {
   }
 
   const url =
-    "https://zutool.jp/api/getweatherstatus/" + map.getLocationIdByName(body.text);
+    "https://zutool.jp/api/getweatherstatus/" + locations.getIdByName(body.text);
   console.info("url: " + url);
 
   return await fetchZutool(url).then((res) => {

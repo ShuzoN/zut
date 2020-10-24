@@ -1,4 +1,4 @@
-exports.getLocationIdByName = function (locationName) {
+exports.getIdByName = function (locationName) {
   var map = new Map();
   
   map.set("千代田", 13101);
