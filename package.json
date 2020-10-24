@@ -1,0 +1,22 @@
+{
+  "name": "zut",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShuzoN/zut.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShuzoN/zut/issues"
+  },
+  "homepage": "https://github.com/ShuzoN/zut#readme",
+  "devDependencies": {
+    "jest": "^26.6.1"
+  }
+}
