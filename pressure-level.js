@@ -1,18 +1,4 @@
-exports.getByWeatherType = function (weatherType) {
-  if (weatherType === "100") {
-    return ":sunny:";
-  }
-  if (weatherType === "200") {
-    return ":cloud:";
-  }
-  if (weatherType === "300") {
-    return ":umbrella:";
-  }
-
-  return ":innocent:";
-};
-
-exports.getByPressureLevel = function (pressureLevelType) {
+exports.get = function (pressureLevelType) {
   if (pressureLevelType === "0") {
     return ":ok:";
   }
