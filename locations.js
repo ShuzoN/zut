@@ -52,5 +52,10 @@ exports.getIdByName = function (locationName) {
   map.set("西東京",13229);
   map.set("沖縄", 47211);
 
+exports.getIdByName = function (locationName) {
   return map.get(locationName);
 };
+
+exports.getArrayList = function () {
+  return Array.from(map.keys());
+}; 
