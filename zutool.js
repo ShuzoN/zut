@@ -1,5 +1,5 @@
-const weather = require("weather");
-const pressureLevel = require("pressure-level");
+const weather = require("./weather");
+const pressureLevel = require("./pressure-level");
 
 exports.fetch = function (locationId) {
   const url =
