@@ -3,11 +3,7 @@ const locations = require("locations");
 const zutool = require("zutool");
 
 exports.handler = async (event, context, callback) => {
-  const paramString = event["body-json"]["body"];
-  const body = [...new URLSearchParams(paramString).entries()].reduce(
-    (obj, e) => ({ ...obj, [e[0]]: e[1] }),
-    {}
-  );
+  const body = getLambdaBody(event);
 
   if (locations.getIdByName(body.text) === undefined) {
     console.info("error: 利用できない地域です");
@@ -42,3 +38,13 @@ exports.handler = async (event, context, callback) => {
     };
   });
 };
+
+function getLambdaBody(event) {
+  const paramString = event["body-json"]["body"];
+  const body = [...new URLSearchParams(paramString).entries()].reduce(
+    (obj, e) => ({ ...obj, [e[0]]: e[1] }),
+    {}
+  );
+
+  return body;
+}
