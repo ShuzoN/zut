@@ -6,36 +6,15 @@ exports.handler = async (event, context, callback) => {
   const body = getLambdaBody(event);
 
   if (locations.getIdByName(body.text) === undefined) {
-    console.info("error: 利用できない地域です");
-    return {
-      response_type: "in_channel",
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: "地域を指定してください: " + locations.getArrayList().join(","),
-          },
-        },
-      ],
-    };
+    const responseBody = "地域を指定してください: " + locations.getArrayList().join(",");
+    return buildSlackResponse(responseBody);
   }
 
   const locationName = locations.getIdByName(body.text);
 
   return await zutool.fetch(locationName).then((response) => {
-    return {
-      response_type: "in_channel",
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: zutool.formatter(response).join("\n"),
-          },
-        },
-      ],
-    };
+    const responseBody = zutool.formatter(response).join("\n");
+    return buildSlackResponse(responseBody);
   });
 };
 
@@ -47,4 +26,19 @@ function getLambdaBody(event) {
   );
 
   return body;
+}
+
+function buildSlackResponse(body) {
+  return {
+    response_type: "in_channel",
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: body,
+        },
+      },
+    ],
+  };
 }
