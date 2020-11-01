@@ -1,9 +1,9 @@
 const weather = require("weather");
 const pressureLevel = require("pressure-level");
 
-exports.fetch = function (locationName) {
+exports.fetch = function (locationId) {
   const url =
-    "https://zutool.jp/api/getweatherstatus/" + locationName;
+    "https://zutool.jp/api/getweatherstatus/" + locationId;
   console.info("url: " + url);
 
   return new Promise(function (resolve, reject) {
