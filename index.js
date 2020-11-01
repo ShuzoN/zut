@@ -19,7 +19,7 @@ exports.handler = async (event, context, callback) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: "地域を指定してください: 千代田,中央,港,新宿,文京,台東,墨田,江東,品川,目黒,大田,世田谷,渋谷,中野,杉並,豊島,北,荒川,板橋,練馬,足立,葛飾,江戸川,沖縄",
+            text: "地域を指定してください: " + locations.getArrayList().join(","),
           },
         },
       ],
