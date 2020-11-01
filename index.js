@@ -1,7 +1,6 @@
 const https = require("https");
 const locations = require("locations");
-const weather = require("weather");
-const pressureLevel = require("pressure-level");
+const zutool = require("zutool");
 
 exports.handler = async (event, context, callback) => {
   const paramString = event["body-json"]["body"];
@@ -24,15 +23,11 @@ exports.handler = async (event, context, callback) => {
         },
       ],
     };
-    
-    
   }
 
-  const url =
-    "https://zutool.jp/api/getweatherstatus/" + locations.getIdByName(body.text);
-  console.info("url: " + url);
+  const locationName = locations.getIdByName(body.text);
 
-  return await fetchZutool(url).then((res) => {
+  return await zutool.fetch(locationName).then((response) => {
     return {
       response_type: "in_channel",
       blocks: [
@@ -40,32 +35,10 @@ exports.handler = async (event, context, callback) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: weatherFormatter(res).join("\n"),
+            text: zutool.formatter(response).join("\n"),
           },
         },
       ],
     };
   });
 };
-
-function fetchZutool(url) {
-  return new Promise(function (resolve, reject) {
-    https
-      .get(url, (res) => {
-        res.on("data", (body) => resolve(JSON.parse(body)));
-      })
-      .on("error", (e) => {
-        reject(Error(e));
-      });
-  });
-}
-
-function weatherFormatter(zutoolJson) {
-  return zutoolJson.today
-    .filter((h) => h.time > 7 && h.time < 21)
-    .map((h) => {
-      return `${h.time}時 ${weather.get(h.weather)} ${h.temp}℃ ${
-        h.pressure
-      }hPa ${pressureLevel.get(h.pressure_level)}`;
-    });
-}
