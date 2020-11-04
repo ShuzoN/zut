@@ -1,4 +1,3 @@
-const https = require("https");
 const locations = require("locations");
 const zutool = require("zutool");
 const lambda = require("lambda");
