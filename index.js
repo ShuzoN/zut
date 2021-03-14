@@ -5,10 +5,16 @@ const slack = require("slack");
 
 exports.handler = async (event, context, callback) => {
   const body = lambda.getBody(event);
-  const locationName = body.text;
+  const args = body.text.split(" ");
+  const locationName = args[0];
+  const isTomorrow = args[1];
 
-  if (locations.getIdByName(locationName) === undefined) {
-    const responseBody = "地域を指定してください: " + locations.getArrayList().join(",");
+  if (
+    locationName.includes("--") ||
+    locations.getIdByName(locationName) === undefined
+  ) {
+    const responseBody = `/zut 場所　(--tomorrow)
+地域を指定してください: ${locations.getArrayList().join(",")}`;
     return slack.buildResponse(responseBody);
   }
 
