@@ -7,7 +7,7 @@ exports.handler = async (event, context, callback) => {
   const body = lambda.getBody(event);
   const args = body.text.split(" ");
   const locationName = args[0];
-  const isTomorrow = args[1].includes("--tomorrow");
+  const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
   if (
     locationName.includes("--") ||
     locations.getIdByName(locationName) === undefined
