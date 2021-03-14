@@ -20,7 +20,8 @@ exports.handler = async (event, context, callback) => {
   const locationId = locations.getIdByName(locationName);
 
   return await zutool.fetch(locationId).then((response) => {
-    const day = isTomorrow ? response.tomorrow : response.today;
+    //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
+    const day = isTomorrow ? response.tommorow : response.today;
     const responseBody = zutool.formatter(day).join("\n");
     return slack.buildResponse(responseBody);
   });
