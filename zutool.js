@@ -32,6 +32,11 @@ exports.search = function (searchQuery) {
   });
 };
 
+exports.unescape = (json) => {
+  const excludeDoubleQuote = json.replace('\\"', '"');
+  return excludeDoubleQuote.replace(/\\\\/g, "\\");
+};
+
 exports.formatter = function (day) {
   return day
     .filter((h) => h.time > 5 && h.time < 24)
