@@ -63,6 +63,82 @@ test("昨日、今日、明日の最高気温を取得する", () => {
   expect(zutool.daysMaxTemperature(zutoolJson)).toEqual(expected);
 });
 
+test("昨日、今日の気温差が5度以下の場合は0が返ること", () => {
+  const yesterday = 15.1;
+  const today = 20.0;
+
+  expect(zutool.inspectTemperatureDifference(yesterday, today)).toEqual(0);
+});
+
+test("マイナスの場合でも昨日、今日の気温差が5度以下の場合は0が返ること", () => {
+  const yesterday = 0;
+  const today = -4.9;
+
+  expect(zutool.inspectTemperatureDifference(yesterday, today)).toEqual(0);
+});
+
+test("昨日、今日の気温差が5度以上8度未満の場合は1が返ること", () => {
+  const yesterday = 15.0;
+  const today = 20.0;
+
+  expect(zutool.inspectTemperatureDifference(yesterday, today)).toEqual(1);
+
+  const yesterday2 = 12.1;
+  const today2 = 20.0;
+
+  expect(zutool.inspectTemperatureDifference(yesterday2, today2)).toEqual(1);
+});
+
+test("マイナスの場合でも昨日、今日の気温差が5度以上8度未満の場合は1が返ること", () => {
+  const yesterday = 0;
+  const today = -5;
+
+  expect(zutool.inspectTemperatureDifference(yesterday, today)).toEqual(1);
+
+  const yesterday2 = 5.0;
+  const today2 = -2.9;
+
+  expect(zutool.inspectTemperatureDifference(yesterday2, today2)).toEqual(1);
+});
+
+test("昨日、今日の気温差が8度以上10度未満の場合は2が返ること", () => {
+  const yesterday = 12.0;
+  const today = 20.0;
+
+  expect(zutool.inspectTemperatureDifference(yesterday, today)).toEqual(2);
+
+  const yesterday2 = 10.1;
+  const today2 = 20.0;
+
+  expect(zutool.inspectTemperatureDifference(yesterday2, today2)).toEqual(2);
+});
+
+test("マイナスの場合でも昨日、今日の気温差が8度以上10度未満の場合は2が返ること", () => {
+  const yesterday = 3;
+  const today = -5;
+
+  expect(zutool.inspectTemperatureDifference(yesterday, today)).toEqual(2);
+
+  const yesterday2 = 5.0;
+  const today2 = -4.9;
+
+  expect(zutool.inspectTemperatureDifference(yesterday2, today2)).toEqual(2);
+});
+
+test("昨日、今日の気温差が10度以上の場合は3が返ること", () => {
+  const yesterday = 9.9;
+  const today = 20.0;
+
+  expect(zutool.inspectTemperatureDifference(yesterday, today)).toEqual(3);
+});
+
+test("マイナスの場合でも昨日、今日の気温差が10度以上の場合は3が返ること", () => {
+  const yesterday = 5.0;
+  const today = -6.0;
+
+  expect(zutool.inspectTemperatureDifference(yesterday, today)).toEqual(3);
+});
+
 const zutoolJson = {
   place_name: "東京都杉並区",
   place_id: "115",
