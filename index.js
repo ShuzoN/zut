@@ -1,5 +1,5 @@
 const locations = require("locations");
-const zutool = require("zutool");
+const search = require("search");
 const lambda = require("lambda");
 const slack = require("slack");
 const temperature = require("temperature");
@@ -15,34 +15,30 @@ exports.handler = async (event, context, callback) => {
     return slack.buildResponse(responseBody);
   }
 
-  try {
-    const result = search.byLocationName(locationName);
+  const result = search.byLocationName(locationName);
 
-    if (result.length > 1) {
-      const names = result.map((r) => r.name).join("\n");
-      return slack.buildResponse(`対象住所は複数該当します。
+  if (result.length > 1) {
+    const names = result.map((r) => r.name).join("\n");
+    return slack.buildResponse(`対象住所は複数該当します。
     ${names}`);
-    }
+  }
 
-    if (result.length < 1) {
-      const responseBody = `検索に失敗しているのでやり直してください.`;
-      return slack.buildResponse(responseBody);
-    }
+  if (result.length < 1) {
+    const responseBody = `検索に失敗しているのでやり直してください.`;
+    return slack.buildResponse(responseBody);
+  }
 
-    const locationId = result[0].city_code;
+  const locationId = result[0].city_code;
 
-    return await zutool.fetch(locationId).then((response) => {
-      //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
-      const day = isTomorrow ? response.tommorow : response.today;
-      const dayStr = isTomorrow ? "明日" : "今日";
-      const responseBody = `${dayStr} の天気
+  return await zutool.fetch(locationId).then((response) => {
+    //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
+    const day = isTomorrow ? response.tommorow : response.today;
+    const dayStr = isTomorrow ? "明日" : "今日";
+    const responseBody = `${dayStr} の天気
 ${zutool.formatter(day).join("\n")}
 ${temperatureDiffMessage(response, isTomorrow)}`;
-      return slack.buildResponse(responseBody);
-    });
-  } catch (e) {
-    return slack.buildResponse(e);
-  }
+    return slack.buildResponse(responseBody);
+  });
 };
 
 function temperatureDiffMessage(json, isTomorrow) {
