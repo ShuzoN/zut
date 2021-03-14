@@ -3,8 +3,7 @@ const weather = require("./weather");
 const pressureLevel = require("./pressure-level");
 
 exports.fetch = function (locationId) {
-  const url =
-    "https://zutool.jp/api/getweatherstatus/" + locationId;
+  const url = "https://zutool.jp/api/getweatherstatus/" + locationId;
   console.info("url: " + url);
 
   return new Promise(function (resolve, reject) {
@@ -18,12 +17,12 @@ exports.fetch = function (locationId) {
   });
 };
 
-exports.formatter = function (json) {
-    return json.today
-      .filter((h) => h.time > 5 && h.time < 24)
-      .map((h) => {
-        return `${h.time}時 ${weather.get(h.weather)} ${h.temp}℃ ${
-          h.pressure
+exports.formatter = function (day) {
+  return day
+    .filter((h) => h.time > 5 && h.time < 24)
+    .map((h) => {
+      return `${h.time}時 ${weather.get(h.weather)} ${h.temp}℃ ${
+        h.pressure
       }hPa ${pressureLevel.get(h.pressure_level)}`;
     });
 };
