@@ -20,7 +20,7 @@ exports.handler = async (event, context, callback) => {
 
   if (result.length > 1) {
     const names = result.map((r) => r.name).join("\n");
-    return slack.buildResponse(`対象住所は複数該当します。
+    return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ入力してください。
 ${names}`);
   }
 
