@@ -1,4 +1,5 @@
 const locations = require("locations");
+const zutool = require("zutool");
 const search = require("search");
 const lambda = require("lambda");
 const slack = require("slack");
@@ -15,12 +16,12 @@ exports.handler = async (event, context, callback) => {
     return slack.buildResponse(responseBody);
   }
 
-  const result = search.byLocationName(locationName);
+  const result = await search.byLocationName(locationName);
 
   if (result.length > 1) {
     const names = result.map((r) => r.name).join("\n");
     return slack.buildResponse(`対象住所は複数該当します。
-    ${names}`);
+${names}`);
   }
 
   if (result.length < 1) {
