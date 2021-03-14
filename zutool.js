@@ -1,6 +1,7 @@
 const https = require("https");
 const weather = require("./weather");
 const pressureLevel = require("./pressure-level");
+const { maxHeaderSize } = require("http");
 
 exports.fetch = function (locationId) {
   const url = "https://zutool.jp/api/getweatherstatus/" + locationId;
@@ -26,3 +27,23 @@ exports.formatter = function (day) {
       }hPa ${pressureLevel.get(h.pressure_level)}`;
     });
 };
+
+exports.daysMaxTemperature = function (json) {
+  return {
+    yesterday: maxTemperature(getTemperatureInADay(json.yesterday)),
+    today: maxTemperature(getTemperatureInADay(json.today)),
+    tomorrow: maxTemperature(getTemperatureInADay(json.tommorow)),
+  };
+};
+
+function getTemperatureInADay(day) {
+  return day.map((d) => {
+    return d.temp;
+  });
+}
+
+function maxTemperature(dayTemp) {
+  return dayTemp.reduce(function (a, b) {
+    return Math.max(a, b);
+  });
+}

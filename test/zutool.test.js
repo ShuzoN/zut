@@ -53,11 +53,191 @@ test("zutoolから受け取ったjsonを明日分についてフォーマット�
   );
 });
 
+test("昨日、今日、明日の最高気温を取得する", () => {
+  const expected = {
+    yesterday: 13.8,
+    today: 20.9,
+    tomorrow: 19.5,
+  };
+
+  expect(zutool.daysMaxTemperature(zutoolJson)).toEqual(expected);
+});
+
 const zutoolJson = {
   place_name: "東京都杉並区",
   place_id: "115",
   prefectures_id: "13",
   dateTime: "2020-11-01 10",
+  yesterday: [
+    {
+      time: "0",
+      weather: "300",
+      temp: "11.8",
+      pressure: "1021.7",
+      pressure_level: "4",
+    },
+    {
+      time: "1",
+      weather: "300",
+      temp: "11.6",
+      pressure: "1020.7",
+      pressure_level: "4",
+    },
+    {
+      time: "2",
+      weather: "300",
+      temp: "11.6",
+      pressure: "1019.1",
+      pressure_level: "4",
+    },
+    {
+      time: "3",
+      weather: "300",
+      temp: "12.0",
+      pressure: "1018",
+      pressure_level: "4",
+    },
+    {
+      time: "4",
+      weather: "300",
+      temp: "10.4",
+      pressure: "1017.4",
+      pressure_level: "4",
+    },
+    {
+      time: "5",
+      weather: "300",
+      temp: "10.2",
+      pressure: "1015.8",
+      pressure_level: "4",
+    },
+    {
+      time: "6",
+      weather: "300",
+      temp: "10.7",
+      pressure: "1015.4",
+      pressure_level: "4",
+    },
+    {
+      time: "7",
+      weather: "300",
+      temp: "11.2",
+      pressure: "1014.5",
+      pressure_level: "4",
+    },
+    {
+      time: "8",
+      weather: "300",
+      temp: "11.0",
+      pressure: "1014.3",
+      pressure_level: "4",
+    },
+    {
+      time: "9",
+      weather: "300",
+      temp: "10.4",
+      pressure: "1012.9",
+      pressure_level: "4",
+    },
+    {
+      time: "10",
+      weather: "300",
+      temp: "11.1",
+      pressure: "1011.6",
+      pressure_level: "4",
+    },
+    {
+      time: "11",
+      weather: "300",
+      temp: "11.9",
+      pressure: "1009.6",
+      pressure_level: "4",
+    },
+    {
+      time: "12",
+      weather: "300",
+      temp: "13.2",
+      pressure: "1007.3",
+      pressure_level: "4",
+    },
+    {
+      time: "13",
+      weather: "300",
+      temp: "13.8",
+      pressure: "1004.6",
+      pressure_level: "4",
+    },
+    {
+      time: "14",
+      weather: "300",
+      temp: "13.2",
+      pressure: "1001.9",
+      pressure_level: "4",
+    },
+    {
+      time: "15",
+      weather: "300",
+      temp: "11.7",
+      pressure: "1000.7",
+      pressure_level: "2",
+    },
+    {
+      time: "16",
+      weather: "300",
+      temp: "11.6",
+      pressure: "1001",
+      pressure_level: "2",
+    },
+    {
+      time: "17",
+      weather: "300",
+      temp: "10.6",
+      pressure: "1001.4",
+      pressure_level: "2",
+    },
+    {
+      time: "18",
+      weather: "300",
+      temp: "10.7",
+      pressure: "1001.7",
+      pressure_level: "2",
+    },
+    {
+      time: "19",
+      weather: "300",
+      temp: "10.7",
+      pressure: "1002.2",
+      pressure_level: "2",
+    },
+    {
+      time: "20",
+      weather: "300",
+      temp: "10.7",
+      pressure: "1003",
+      pressure_level: "2",
+    },
+    {
+      time: "21",
+      weather: "100",
+      temp: "10.5",
+      pressure: "1003",
+      pressure_level: "1",
+    },
+    {
+      time: "22",
+      weather: "100",
+      temp: "10.3",
+      pressure: "1002.6",
+      pressure_level: "1",
+    },
+    {
+      time: "23",
+      weather: "100",
+      temp: "9.6",
+      pressure: "1002.5",
+      pressure_level: "1",
+    },
+  ],
   today: [
     {
       time: "0",
