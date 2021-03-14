@@ -2,6 +2,7 @@ const locations = require("locations");
 const zutool = require("zutool");
 const lambda = require("lambda");
 const slack = require("slack");
+const temperature = require("temperature");
 
 exports.handler = async (event, context, callback) => {
   const body = lambda.getBody(event);
@@ -24,7 +25,16 @@ exports.handler = async (event, context, callback) => {
     const day = isTomorrow ? response.tommorow : response.today;
     const dayStr = isTomorrow ? "明日" : "今日";
     const responseBody = `${dayStr} の天気
-    ${zutool.formatter(day).join("\n")}`;
+${zutool.formatter(day).join("\n")}
+${temperatureDiffMessage(response, isTomorrow)}`;
     return slack.buildResponse(responseBody);
   });
 };
+
+function temperatureDiffMessage(json, isTomorrow) {
+  const daysMaxTemp = temperature.daysMax(json);
+  const tempDiffLevel = isTomorrow
+    ? temperature.inspectDifference(daysMaxTemp.today, daysMaxTemp.tomorrow)
+    : temperature.inspectDifference(daysMaxTemp.yesterday, daysMaxTemp.today);
+  return temperature.format(tempDiffLevel);
+}
