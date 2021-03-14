@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ShuzoN/zut#readme",
   "devDependencies": {
+    "encoding-japanese": "^1.0.30",
     "jest": "^26.6.1"
   }
 }
