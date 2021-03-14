@@ -16,7 +16,7 @@ exports.fetch = function (locationId) {
         reject(Error(e));
       });
   });
-}
+};
 
 exports.formatter = function (json) {
     return json.today
@@ -26,4 +26,4 @@ exports.formatter = function (json) {
           h.pressure
       }hPa ${pressureLevel.get(h.pressure_level)}`;
     });
-}
+};

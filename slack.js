@@ -11,4 +11,4 @@ exports.buildResponse = function (body) {
       },
     ],
   };
-}
+};
