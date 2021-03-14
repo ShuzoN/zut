@@ -15,6 +15,9 @@ test("zutoolから受け取ったjsonをフォーマットできること", () =
         "18時 :cloud: 17.2℃ 1024.4hPa :ok:",
         "19時 :cloud: 15.9℃ 1025hPa :ok:",
         "20時 :sunny: 14.7℃ 1024.9hPa :ok:",
+        "21時 :sunny: 13.8℃ 1024.6hPa :bomb:",
+        "22時 :sunny: 13.2℃ 1023.9hPa :bomb:",
+        "23時 :sunny: 12.8℃ 1023.6hPa :arrow_heading_down:",
     ];
 
     expect(zutool.formatter(zutoolJson)).toEqual(
@@ -180,21 +183,21 @@ const zutoolJson = {
         weather: '100',
         temp: '13.8',
         pressure: '1024.6',
-        pressure_level: '3'
+        pressure_level: '4'
       },
       {
         time: '22',
         weather: '100',
         temp: '13.2',
         pressure: '1023.9',
-        pressure_level: '3'
+        pressure_level: '4'
       },
       {
         time: '23',
         weather: '100',
         temp: '12.8',
         pressure: '1023.6',
-        pressure_level: '3'
+        pressure_level: '2'
       }
     ]
   };
