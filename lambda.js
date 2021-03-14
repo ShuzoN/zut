@@ -6,4 +6,4 @@ exports.getBody = function (event) {
   );
 
   return body;
-}
+};

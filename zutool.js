@@ -16,14 +16,14 @@ exports.fetch = function (locationId) {
         reject(Error(e));
       });
   });
-}
+};
 
 exports.formatter = function (json) {
     return json.today
-      .filter((h) => h.time > 5 && h.time < 21)
+      .filter((h) => h.time > 5 && h.time < 24)
       .map((h) => {
         return `${h.time}時 ${weather.get(h.weather)} ${h.temp}℃ ${
           h.pressure
       }hPa ${pressureLevel.get(h.pressure_level)}`;
     });
-}
+};
