@@ -20,7 +20,6 @@ exports.fetch = function (locationId) {
 
 exports.search = function (searchQuery) {
   const url = "https://zutool.jp/api/getweatherpoint/" + searchQuery;
-  console.info("url: " + url);
 
   return new Promise(function (resolve, reject) {
     https
