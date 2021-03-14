@@ -16,3 +16,10 @@ test("zutoolに対して場所検索を行えること", async () => {
   ];
   expect(actual).toEqual(expected);
 });
+
+test("zutoolに対して空文字で検索した場合, 例外が返ること", () => {
+  const promise = search.byLocationName("");
+  expect(promise).rejects.toThrowError(
+    new Error("検索文字列が指定されていません")
+  );
+});
