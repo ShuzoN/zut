@@ -22,7 +22,9 @@ exports.handler = async (event, context, callback) => {
   return await zutool.fetch(locationId).then((response) => {
     //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
     const day = isTomorrow ? response.tommorow : response.today;
-    const responseBody = zutool.formatter(day).join("\n");
+    const dayStr = isTomorrow ? "明日" : "今日";
+    const responseBody = `${dayStr} の天気
+    ${zutool.formatter(day).join("\n")}`;
     return slack.buildResponse(responseBody);
   });
 };
