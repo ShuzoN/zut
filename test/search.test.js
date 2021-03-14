@@ -9,7 +9,10 @@ test("zutoolから取得したjsonをエスケープできること", async () =
   expect(actual).toEqual(expected);
 });
 
-test("zutoolから受け取ったjsonを当日分についてフォーマットできること", async () => {
-  await search.result();
-  expect(true).toEqual(true);
+test("zutoolに対して場所検索を行えること", async () => {
+  const actual = await search.byLocationName("杉並");
+  const expected = [
+    { city_code: "13115", name_kata: "ｽｷﾞﾅﾐｸ", name: "東京都杉並区" },
+  ];
+  expect(actual).toEqual(expected);
 });
