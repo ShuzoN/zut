@@ -17,6 +17,21 @@ exports.fetch = function (locationId) {
   });
 };
 
+exports.search = function (searchQuery) {
+  const url = "https://zutool.jp/api/getweatherpoint/" + searchQuery;
+  console.info("url: " + url);
+
+  return new Promise(function (resolve, reject) {
+    https
+      .get(url, (res) => {
+        res.on("data", (body) => resolve(JSON.parse(body)));
+      })
+      .on("error", (e) => {
+        reject(Error(e));
+      });
+  });
+};
+
 exports.formatter = function (day) {
   return day
     .filter((h) => h.time > 5 && h.time < 24)
