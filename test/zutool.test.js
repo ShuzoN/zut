@@ -2,6 +2,8 @@ const zutool = require("../zutool");
 
 test("zutoolから受け取ったjsonを当日分についてフォーマットできること", () => {
   const formatted = [
+    "6時 :sunny: 7.3℃ 1027.7hPa :ok:",
+    "7時 :sunny: 9.3℃ 1027.9hPa :ok:",
     "8時 :sunny: 11.1℃ 1028.7hPa :ok:",
     "9時 :sunny: 13.6℃ 1028.1hPa :warning:",
     "10時 :sunny: 14.6℃ 1027.6hPa :warning:",
