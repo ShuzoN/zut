@@ -1,6 +1,7 @@
 const https = require("https");
 const weather = require("./weather");
 const pressureLevel = require("./pressure-level");
+const encoding = require("encoding-japanese");
 
 exports.fetch = function (locationId) {
   const url = "https://zutool.jp/api/getweatherstatus/" + locationId;
@@ -30,11 +31,6 @@ exports.search = function (searchQuery) {
         reject(Error(e));
       });
   });
-};
-
-exports.unescape = (json) => {
-  const excludeDoubleQuote = json.replace('\\"', '"');
-  return excludeDoubleQuote.replace(/\\\\/g, "\\");
 };
 
 exports.formatter = function (day) {
