@@ -25,7 +25,7 @@ exports.format = function (diff) {
     case 0:
       return "";
     case 1:
-      return "前日比の気温差が5度以上。体調を崩しやすい日 :waning:";
+      return "前日比の気温差が5度以上。体調を崩しやすい日 :warning:";
     case 2:
       return "前日比の気温差が8度以上。体調を崩していてもおかしくありません :bomb:";
     case 3:
