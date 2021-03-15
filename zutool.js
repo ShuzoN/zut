@@ -3,8 +3,22 @@ const weather = require("./weather");
 const pressureLevel = require("./pressure-level");
 
 exports.fetch = function (locationId) {
-  const url = "https://zutool.jp/api/getweatherstatus/" + locationId;
+  const url = encodeURI("https://zutool.jp/api/getweatherstatus/" + locationId);
   console.info("url: " + url);
+
+  return new Promise(function (resolve, reject) {
+    https
+      .get(url, (res) => {
+        res.on("data", (body) => resolve(JSON.parse(body)));
+      })
+      .on("error", (e) => {
+        reject(Error(e));
+      });
+  });
+};
+
+exports.search = function (searchQuery) {
+  const url = encodeURI("https://zutool.jp/api/getweatherpoint/" + searchQuery);
 
   return new Promise(function (resolve, reject) {
     https
