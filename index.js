@@ -6,8 +6,8 @@ const temperature = require("temperature");
 
 exports.handler = async (event, context, callback) => {
   const body = lambda.getBody(event);
-  const args = body.text.split(" ");
-  if (args[0] === "" || locationName.includes("--")) {
+  const parsedArgs = parseArgs(body);
+  if (parsedArgs.isHelp) {
     const responseBody = `/zut 場所　(--tomorrow)
 対応する地名が複数ある場合は地名とcity_codeを表示します。
 天気表示は「市町村区名」のみ入力するのがコツです。
@@ -42,38 +42,16 @@ e.g. /zut 13117
     return slack.buildResponse(responseBody);
   }
 
-  let locationId;
-  // locationIdは数値5桁(prefecturesId2桁 + placeId3桁)のみ指定されている場合
-  const gotLocationId = /^\d{5}$/.test(args[0]);
-  if (gotLocationId) {
-    locationId = args[0];
-  } else {
-    // locationId指定じゃない＝地域名の指定の場合は、一度検索してlocationIdを取得する
-    const locationName = args[0];
-    const result = await search.byLocationName(locationName);
+  // 地域名の指定の場合は、一度検索してlocationIdを取得する
+  const locationId = parsedArgs.gotLocationId ? parsedArgs.locationId : fetchLocationId(parsedArgs.locationName);
 
-    if (result.length > 1) {
-      const names = result.map((r) => `${r.name}: ${r.city_code}`).join("\n");
-      return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
-  ${names}`);
-    }
-
-    if (result.length < 1) {
-      const responseBody = `検索に失敗しているのでやり直してください.`;
-      return slack.buildResponse(responseBody);
-    }
-
-    locationId = result[0].city_code;
-  }
-
-  const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
   return await zutool.fetch(locationId).then((response) => {
     //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
-    const day = isTomorrow ? response.tommorow : response.today;
-    const dayStr = isTomorrow ? "明日" : "今日";
+    const day = parsedArgs.isTomorrow ? response.tommorow : response.today;
+    const dayStr = parsedArgs.isTomorrow ? "明日" : "今日";
     const responseBody = `${dayStr} の天気
 ${zutool.formatter(day).join("\n")}
-${temperatureDiffMessage(response, isTomorrow)}`;
+${temperatureDiffMessage(response, parsedArgs.isTomorrow)}`;
     return slack.buildResponse(responseBody);
   });
 };
@@ -84,4 +62,33 @@ function temperatureDiffMessage(json, isTomorrow) {
     ? temperature.inspectDifference(daysMaxTemp.today, daysMaxTemp.tomorrow)
     : temperature.inspectDifference(daysMaxTemp.yesterday, daysMaxTemp.today);
   return temperature.format(tempDiffLevel);
+}
+
+function parseArgs(body) {
+  const args = body.text.split(" ");
+  const isHelp = args[0] === "" || locationName.includes("--");
+  // locationIdは数値5桁(prefecturesId2桁 + placeId3桁)のみ指定されている場合
+  const gotLocationId = /^\d{5}$/.test(args[0]);
+  // locationIdがない場合はlocationNameとして扱う
+  const locationName = !gotLocationId ? args[0] : '';
+  const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
+
+  return { isHelp, gotLocationId, locationName, isTomorrow }
+}
+
+function fetchLocationId(locationName) {
+  const result = await search.byLocationName(locationName);
+
+  if (result.length > 1) {
+    const names = result.map((r) => `${r.name}: ${r.city_code}`).join("\n");
+    return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
+${names}`);
+  }
+
+  if (result.length < 1) {
+    const responseBody = `検索に失敗しているのでやり直してください.`;
+    return slack.buildResponse(responseBody);
+  }
+
+  return result[0].city_code;
 }
