@@ -53,9 +53,9 @@ e.g. /zut 13117
     const result = await search.byLocationName(locationName);
 
     if (result.length > 1) {
-      const [names, city_code] = result.map((r) => [r.name, r.city_code]).join("\n");
+      const names = result.map((r) => `${r.name}: ${r.city_code}`).join("\n");
       return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
-  ${names}: ${city_code}`);
+  ${names}`);
     }
 
     if (result.length < 1) {
