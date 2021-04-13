@@ -9,5 +9,5 @@ install:
 zip: 
 	$(ZIP) -r zut.zip .
 
-test:
+test: install
 	 $(YARN) test
