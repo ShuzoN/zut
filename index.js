@@ -11,14 +11,14 @@ exports.handler = async (event, context, callback) => {
   const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
   if (args[0] === "" || locationName.includes("--")) {
     const responseBody = `/zut 場所　(--tomorrow)
-対応する地名が複数ある場合は地名表示します。
+対応する地名が複数ある場合は地名とcity_codeを表示します。
 天気表示は「市町村区名」のみ入力するのがコツです。
 フルネームで入れると動きません。
 
 e.g. /zut 仙台
-宮城県仙台市青葉区
-宮城県仙台市宮城野区
-宮城県仙台市泉区
+宮城県仙台市青葉区: 04101
+宮城県仙台市宮城野区: 04102
+宮城県仙台市泉区: 04103
 ...
 
 
@@ -27,6 +27,19 @@ e.g. /zut 仙台市青葉区
 
 e.g. /zut 仙台市青葉区 --tomorrow
 明日の天気表示
+
+---
+また、東京都の場合はcity_codeでの検索を試してみてください。
+
+e.g. /zut 北区
+北海道札幌市北区: 01102
+埼玉県さいたま市北区: 11102
+東京都北区: 13117
+・・・
+
+
+e.g. /zut 13117
+今日の天気表示
 `;
     return slack.buildResponse(responseBody);
   }
