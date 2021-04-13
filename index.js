@@ -34,9 +34,9 @@ e.g. /zut 仙台市青葉区 --tomorrow
   const result = await search.byLocationName(locationName);
 
   if (result.length > 1) {
-    const names = result.map((r) => r.name).join("\n");
-    return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ入力してください。
-${names}`);
+    const [names, city_code] = result.map((r) => [r.name, r.city_code]).join("\n");
+    return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ入力してください。東京都の場合はcodeで検索してください。
+${names}: ${city_code}`);
   }
 
   if (result.length < 1) {
