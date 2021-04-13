@@ -27,7 +27,7 @@ e.g. /zut 仙台市青葉区 --tomorrow
 明日の天気表示
 
 ---
-また、東京都の場合はcity_codeでの検索を試してみてください。
+また、複数選択肢があり天気が表示されない場合はcity_codeでの検索を試してみてください。
 
 e.g. /zut 北区
 北海道札幌市北区: 01102
@@ -54,7 +54,7 @@ e.g. /zut 13117
 
     if (result.length > 1) {
       const [names, city_code] = result.map((r) => [r.name, r.city_code]).join("\n");
-      return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ入力してください。東京都の場合はcodeで検索してください。
+      return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
   ${names}: ${city_code}`);
     }
 
