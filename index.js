@@ -3,43 +3,13 @@ const search = require("search");
 const lambda = require("lambda");
 const slack = require("slack");
 const temperature = require("temperature");
+const help = require("help");
 
 exports.handler = async (event, context, callback) => {
   const body = lambda.getBody(event);
   const parsedArgs = parseArgs(body);
   if (parsedArgs.isHelp) {
-    const responseBody = `/zut 場所　(--tomorrow)
-対応する地名が複数ある場合は地名とcity_codeを表示します。
-天気表示は「市町村区名」のみ入力するのがコツです。
-フルネームで入れると動きません。
-
-e.g. /zut 仙台
-宮城県仙台市青葉区: 04101
-宮城県仙台市宮城野区: 04102
-宮城県仙台市泉区: 04103
-...
-
-
-e.g. /zut 仙台市青葉区
-今日の天気表示
-
-e.g. /zut 仙台市青葉区 --tomorrow
-明日の天気表示
-
----
-また、複数選択肢があり天気が表示されない場合はcity_codeでの検索を試してみてください。
-
-e.g. /zut 北区
-北海道札幌市北区: 01102
-埼玉県さいたま市北区: 11102
-東京都北区: 13117
-・・・
-
-
-e.g. /zut 13117
-今日の天気表示
-`;
-    return slack.buildResponse(responseBody);
+    return slack.buildResponse(help.message);
   }
 
   // 地域名の指定の場合は、一度検索してlocationIdを取得する
