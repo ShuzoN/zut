@@ -13,7 +13,14 @@ exports.handler = async (event, context, callback) => {
   }
 
   // 地域名の指定の場合は、一度検索してlocationIdを取得する
-  const locationId = parsedArgs.gotLocationId ? parsedArgs.locationId : fetchLocationId(parsedArgs.locationName);
+  if (!parsedArgs.gotLocationId) {
+    const fetchLocation = await fetchLocationId(parsedArgs.locationName);
+    if (fetchLocation.errorMessage != null) {
+      return slack.buildResponse(fetchLocation.errorMessage);
+    }
+  }
+
+  const locationId = parsedArgs.gotLocationId ? parsedArgs.locationId : fetchLocation.locationId;
 
   return await zutool.fetch(locationId).then((response) => {
     //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
@@ -46,19 +53,27 @@ function parseArgs(body) {
   return { isHelp, gotLocationId, locationName, isTomorrow }
 }
 
-function fetchLocationId(locationName) {
+async function fetchLocationId(locationName) {
   const result = await search.byLocationName(locationName);
 
   if (result.length > 1) {
-    const names = result.map((r) => `${r.name}: ${r.city_code}`).join("\n");
-    return slack.buildResponse(`対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
-${names}`);
+    const result = result.map((r) => `${r.name}: ${r.city_code}`).join("\n");
+    return {
+      errorMessage: `対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
+${result}`,
+      locationId: null
+    };
   }
 
   if (result.length < 1) {
-    const responseBody = `検索に失敗しているのでやり直してください.`;
-    return slack.buildResponse(responseBody);
+    return {
+      errorMessage: `検索に失敗しているのでやり直してください.`,
+      locationId: null
+    }
   }
 
-  return result[0].city_code;
+  return {
+    errorMessage: null,
+    locationId: result[0].city_code
+  }
 }
