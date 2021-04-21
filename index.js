@@ -42,7 +42,8 @@ function temperatureDiffMessage(json, isTomorrow) {
 
 function parseBody(body) {
   const args = body.text.split(" ");
-  const isHelp = args[0] === "" || locationName.includes("--");
+  // 引数がないもしくは'--'が入ってるときはhelp
+  const isHelp = args[0] === "" || args[0].includes("--");
   // locationIdは数値5桁(prefecturesId2桁 + placeId3桁)のみ指定されている場合
   const gotLocationId = /^\d{5}$/.test(args[0]);
   const locationId = gotLocationId ? args[0] : null;
