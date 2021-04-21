@@ -45,11 +45,12 @@ function parseBody(body) {
   const isHelp = args[0] === "" || locationName.includes("--");
   // locationIdは数値5桁(prefecturesId2桁 + placeId3桁)のみ指定されている場合
   const gotLocationId = /^\d{5}$/.test(args[0]);
+  const locationId = gotLocationId ? args[0] : null;
   // locationIdがない場合はlocationNameとして扱う
   const locationName = !gotLocationId ? args[0] : '';
   const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
 
-  return { isHelp, gotLocationId, locationName, isTomorrow }
+  return { isHelp, gotLocationId, locationId, locationName, isTomorrow }
 }
 
 async function fetchLocationId(locationName) {
