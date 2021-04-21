@@ -6,29 +6,28 @@ const temperature = require("temperature");
 const help = require("help");
 
 exports.handler = async (event, context, callback) => {
-  const body = lambda.getBody(event);
-  const parsedArgs = parseArgs(body);
-  if (parsedArgs.isHelp) {
+  const parsedBody = parseBody(lambda.getBody(event));
+  if (parsedBody.isHelp) {
     return slack.buildResponse(help.message);
   }
 
   // 地域名の指定の場合は、一度検索してlocationIdを取得する
-  if (!parsedArgs.gotLocationId) {
-    const fetchLocation = await fetchLocationId(parsedArgs.locationName);
+  if (!parsedBody.gotLocationId) {
+    const fetchLocation = await fetchLocationId(parsedBody.locationName);
     if (fetchLocation.errorMessage != null) {
       return slack.buildResponse(fetchLocation.errorMessage);
     }
   }
 
-  const locationId = parsedArgs.gotLocationId ? parsedArgs.locationId : fetchLocation.locationId;
+  const locationId = parsedBody.gotLocationId ? parsedBody.locationId : fetchLocation.locationId;
 
   return await zutool.fetch(locationId).then((response) => {
     //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
-    const day = parsedArgs.isTomorrow ? response.tommorow : response.today;
-    const dayStr = parsedArgs.isTomorrow ? "明日" : "今日";
+    const day = parsedBody.isTomorrow ? response.tommorow : response.today;
+    const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
     const responseBody = `${dayStr} の天気
 ${zutool.formatter(day).join("\n")}
-${temperatureDiffMessage(response, parsedArgs.isTomorrow)}`;
+${temperatureDiffMessage(response, parsedBody.isTomorrow)}`;
     return slack.buildResponse(responseBody);
   });
 };
@@ -41,7 +40,7 @@ function temperatureDiffMessage(json, isTomorrow) {
   return temperature.format(tempDiffLevel);
 }
 
-function parseArgs(body) {
+function parseBody(body) {
   const args = body.text.split(" ");
   const isHelp = args[0] === "" || locationName.includes("--");
   // locationIdは数値5桁(prefecturesId2桁 + placeId3桁)のみ指定されている場合
