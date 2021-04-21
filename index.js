@@ -1,5 +1,5 @@
 const zutool = require("zutool");
-const search = require("search");
+const location = require("location");
 const lambda = require("lambda");
 const slack = require("slack");
 const temperature = require("temperature");
@@ -13,7 +13,7 @@ exports.handler = async (event, context, callback) => {
 
   // 地域名の指定の場合は、一度検索してlocationIdを取得する
   if (!parsedBody.gotLocationId) {
-    const fetchLocation = await fetchLocationId(parsedBody.locationName);
+    const fetchLocation = await location.fetchLocationId(parsedBody.locationName);
     if (fetchLocation.errorMessage != null) {
       return slack.buildResponse(fetchLocation.errorMessage);
     }
@@ -22,7 +22,7 @@ exports.handler = async (event, context, callback) => {
   const locationId = parsedBody.gotLocationId ? parsedBody.locationId : fetchLocation.locationId;
 
   return await zutool.fetch(locationId).then((response) => {
-    //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
+    // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
     const day = parsedBody.isTomorrow ? response.tommorow : response.today;
     const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
     const responseBody = `${dayStr} の天気
@@ -52,29 +52,4 @@ function parseBody(body) {
   const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
 
   return { isHelp, gotLocationId, locationId, locationName, isTomorrow }
-}
-
-async function fetchLocationId(locationName) {
-  const result = await search.byLocationName(locationName);
-
-  if (result.length > 1) {
-    const result = result.map((r) => `${r.name}: ${r.city_code}`).join("\n");
-    return {
-      errorMessage: `対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
-${result}`,
-      locationId: null
-    };
-  }
-
-  if (result.length < 1) {
-    return {
-      errorMessage: `検索に失敗しているのでやり直してください.`,
-      locationId: null
-    }
-  }
-
-  return {
-    errorMessage: null,
-    locationId: result[0].city_code
-  }
 }
