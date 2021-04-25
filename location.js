@@ -6,16 +6,16 @@ exports.fetchLocationId = async function (locationName) {
   if (result.length > 1) {
     const result = result.map((r) => `${r.name}: ${r.city_code}`).join("\n");
     return {
-        errorMessage: `対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
+      errorMessage: `対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
 ${result}`,
-        locationId: null
+      locationId: null
     };
   }
 
   if (result.length < 1) {
     return {
-    errorMessage: `検索に失敗しているのでやり直してください.`,
-    locationId: null
+      errorMessage: `検索に失敗しているのでやり直してください.`,
+      locationId: null
     }
   }
 
