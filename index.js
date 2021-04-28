@@ -13,13 +13,17 @@ exports.handler = async (event, context, callback) => {
 
   // 地域名の指定の場合は、一度検索してlocationIdを取得する
   if (!parsedBody.gotLocationId) {
-    const fetchLocation = await location.fetchLocationId(parsedBody.locationName);
+    const fetchLocation = await location.fetchLocationId(
+      parsedBody.locationName
+    );
     if (fetchLocation.errorMessage != null) {
       return slack.buildResponse(fetchLocation.errorMessage);
     }
   }
 
-  const locationId = parsedBody.gotLocationId ? parsedBody.locationId : fetchLocation.locationId;
+  const locationId = parsedBody.gotLocationId
+    ? parsedBody.locationId
+    : fetchLocation.locationId;
 
   return await zutool.fetch(locationId).then((response) => {
     // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
@@ -48,8 +52,8 @@ function parseBody(body) {
   const gotLocationId = /^\d{5}$/.test(args[0]);
   const locationId = gotLocationId ? args[0] : null;
   // locationIdがない場合はlocationNameとして扱う
-  const locationName = !gotLocationId ? args[0] : '';
+  const locationName = !gotLocationId ? args[0] : "";
   const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
 
-  return { isHelp, gotLocationId, locationId, locationName, isTomorrow }
+  return { isHelp, gotLocationId, locationId, locationName, isTomorrow };
 }
