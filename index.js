@@ -11,19 +11,21 @@ exports.handler = async (event, context, callback) => {
     return slack.buildResponse(help.message);
   }
 
-  // 地域名の指定の場合は、一度検索してlocationIdを取得する
-  if (!parsedBody.gotLocationId) {
+  const fetchLocationIdByName = () => {
     const fetchLocation = await location.fetchLocationId(
       parsedBody.locationName
     );
+
     if (fetchLocation.errorMessage != null) {
       return slack.buildResponse(fetchLocation.errorMessage);
     }
-  }
+
+    return fetchLocation.locationId;
+  };
 
   const locationId = parsedBody.gotLocationId
     ? parsedBody.locationId
-    : fetchLocation.locationId;
+    : fetchLocationIdByName();
 
   return await zutool.fetch(locationId).then((response) => {
     // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
