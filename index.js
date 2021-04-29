@@ -11,10 +11,8 @@ exports.handler = async (event, context, callback) => {
     return slack.buildResponse(help.message);
   }
 
-  const fetchLocationIdByName = () => {
-    const fetchLocation = await location.fetchLocationId(
-      parsedBody.locationName
-    );
+  const fetchLocationIdByName = async (body) => {
+    const fetchLocation = await location.fetchLocationId(body.locationName);
 
     if (fetchLocation.errorMessage != null) {
       return slack.buildResponse(fetchLocation.errorMessage);
@@ -25,7 +23,7 @@ exports.handler = async (event, context, callback) => {
 
   const locationId = parsedBody.gotLocationId
     ? parsedBody.locationId
-    : fetchLocationIdByName();
+    : await fetchLocationIdByName(parsedBody);
 
   return await zutool.fetch(locationId).then((response) => {
     // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
