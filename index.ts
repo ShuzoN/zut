@@ -10,25 +10,16 @@ import { LocationIdResult } from "./Types/locations";
 
 exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
   const parsedBody: ParseBody = parseBody(lambda.getBody(event));
+
   if (parsedBody.isHelp) {
     return slack.buildResponse(help.message);
   }
 
-  const fetchLocationIdByName = async (body: ParseBody) => {
-    const fetchLocation = await location.fetchLocationId(body.locationName);
+  const fetchLocation = parsedBody.locationId
+    ? { locationId: parsedBody.locationId, errorMessage: null }
+    : await location.fetchLocationId(parsedBody.locationName);
 
-    if (fetchLocation.errorMessage != null) {
-      return slack.buildResponse(fetchLocation.errorMessage);
-    }
-
-    return fetchLocation.locationId;
-  };
-
-  const locationId = parsedBody.gotLocationId
-    ? parsedBody.locationId
-    : await fetchLocationIdByName(parsedBody);
-
-  return await zutool.fetch(locationId).then((response) => {
+  return await zutool.fetch(fetchLocation.locationId).then((response) => {
     // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
     const day = parsedBody.isTomorrow ? response.tommorow : response.today;
     const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
