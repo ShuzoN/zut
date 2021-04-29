@@ -19,7 +19,7 @@ exports.handler = async (event, context, callback) => {
     return slack.buildResponse(fetchLocation.errorMessage);
   }
 
-  return await zutool.fetch(locationId).then((response) => {
+  return await zutool.fetch(fetchLocation.locationId).then((response) => {
     // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
     const day = parsedBody.isTomorrow ? response.tommorow : response.today;
     const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
