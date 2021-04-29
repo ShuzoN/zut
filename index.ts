@@ -6,6 +6,7 @@ import * as temperature from "./temperature";
 import * as help from "./help";
 import { ParseBody, TODO } from "./Types/utils";
 import { LambdaBody } from "./Types/lambda";
+import { LocationIdResult } from "./Types/locations";
 
 exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
   const parsedBody: ParseBody = parseBody(lambda.getBody(event));
