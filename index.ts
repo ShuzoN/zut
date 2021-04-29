@@ -27,9 +27,6 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
   return await zutool
     .fetch(fetchLocation.locationId)
     .then((response: LocationWeatherResponse) => {
-      // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
-      const day = parsedBody.isTomorrow ? response.tommorow : response.today;
-      const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
       const daysWeather: DaysWeather = {
         yesterday: response.yesterday,
         today: response.today,
@@ -37,9 +34,16 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
         dayAfterTommorow: response.dayaftertomorrow,
       };
 
+      // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
+      const day = parsedBody.isTomorrow
+        ? daysWeather.tommorow
+        : daysWeather.today;
+      const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
+
       const responseBody: string = `${dayStr} の天気
 ${zutool.formatter(day).join("\n")}
 ${temperature.diffMessage(daysWeather, parsedBody.isTomorrow)}`;
+
       return slack.buildResponse(responseBody);
     });
 };
