@@ -8,7 +8,7 @@ export function diffMessage(days: DaysWeather, isTomorrow: boolean) {
   return format(tempDiffLevel);
 }
 
-const inspectDifference = (before: number, after: number): number => {
+export const inspectDifference = (before: number, after: number): number => {
   const difference = (a: number, b: number) => {
     return Math.abs(a - b);
   };
@@ -45,7 +45,7 @@ export const format = (diff: number) => {
   }
 };
 
-const daysMax = (days: DaysWeather) => {
+export const daysMax = (days: DaysWeather) => {
   return {
     yesterday: max(listTemperatureInADay(days.yesterday)),
     today: max(listTemperatureInADay(days.today)),
