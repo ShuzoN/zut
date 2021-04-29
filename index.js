@@ -1,9 +1,9 @@
-const zutool = require("zutool");
-const location = require("location");
-const lambda = require("lambda");
-const slack = require("slack");
-const temperature = require("temperature");
-const help = require("help");
+const zutool = require("./zutool");
+const location = require("./location");
+const lambda = require("./lambda");
+const slack = require("./slack");
+const temperature = require("./temperature");
+const help = require("./help");
 
 exports.handler = async (event, context, callback) => {
   const parsedBody = parseBody(lambda.getBody(event));
@@ -11,9 +11,9 @@ exports.handler = async (event, context, callback) => {
     return slack.buildResponse(help.message);
   }
 
-  const fetchLocation = parseBody.locationId
-    ? { locationId: parseBody.locationId, errorMessage: null }
-    : await location.fetchLocationId(parseBody.locationName);
+  const fetchLocation = parsedBody.locationId
+    ? { locationId: parsedBody.locationId, errorMessage: null }
+    : await location.fetchLocationId(parsedBody.locationName);
 
   if (fetchLocation.errorMessage) {
     return slack.buildResponse(fetchLocation.errorMessage);

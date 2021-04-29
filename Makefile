@@ -1,7 +1,7 @@
 ZIP=$(shell which zip)
 YARN=$(shell which yarn)
 
-.PHONY: zip install test
+.PHONY: zip install test zut
 
 install: 
 	$(YARN) install
@@ -11,3 +11,7 @@ zip:
 
 test: install
 	 $(YARN) test
+
+zut: install
+	 $(YARN) run zut ${ARG}
+
