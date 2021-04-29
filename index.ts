@@ -4,14 +4,16 @@ import * as lambda from "./lambda";
 import * as slack from "./slack";
 import * as temperature from "./temperature";
 import * as help from "./help";
+import { ParseBody, TODO } from "./Types/utils";
+import { LambdaBody } from "./Types/lambda";
 
-exports.handler = async (event, context, callback) => {
-  const parsedBody = parseBody(lambda.getBody(event));
+exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
+  const parsedBody: ParseBody = parseBody(lambda.getBody(event));
   if (parsedBody.isHelp) {
     return slack.buildResponse(help.message);
   }
 
-  const fetchLocationIdByName = async (body) => {
+  const fetchLocationIdByName = async (body: ParseBody) => {
     const fetchLocation = await location.fetchLocationId(body.locationName);
 
     if (fetchLocation.errorMessage != null) {
@@ -44,13 +46,13 @@ function temperatureDiffMessage(json, isTomorrow) {
   return temperature.format(tempDiffLevel);
 }
 
-function parseBody(body) {
+function parseBody(body: LambdaBody): ParseBody {
   const args = body.text.split(" ");
   // 引数がないもしくは'--'が入ってるときはhelp
   const isHelp = args[0] === "" || args[0].includes("--");
   // locationIdは数値5桁(prefecturesId2桁 + placeId3桁)のみ指定されている場合
   const gotLocationId = /^\d{5}$/.test(args[0]);
-  const locationId = gotLocationId ? args[0] : null;
+  const locationId = gotLocationId ? Number(args[0]) : null;
   // locationIdがない場合はlocationNameとして扱う
   const locationName = !gotLocationId ? args[0] : "";
   const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
