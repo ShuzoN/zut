@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "zut": "node ./run-zut.js"
+    "zut": "node ./run-zut.js",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
