@@ -1,18 +1,20 @@
 import * as search from "./search";
 
 export const fetchLocationId = async (locationName) => {
-  const result = await search.byLocationName(locationName);
+  const searchResult = await search.byLocationName(locationName);
 
-  if (result.length > 1) {
-    const message = result.map((r) => `${r.name}: ${r.city_code}`).join("\n");
+  if (searchResult.length > 1) {
+    const result = searchResult
+      .map((r) => `${r.name}: ${r.city_code}`)
+      .join("\n");
     return {
       errorMessage: `対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
-${message}`,
+${result}`,
       locationId: null,
     };
   }
 
-  if (result.length < 1) {
+  if (searchResult.length < 1) {
     return {
       errorMessage: `検索に失敗しているのでやり直してください.`,
       locationId: null,
@@ -21,6 +23,6 @@ ${message}`,
 
   return {
     errorMessage: null,
-    locationId: result[0].city_code,
+    locationId: searchResult[0].city_code,
   };
 };
