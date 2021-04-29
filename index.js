@@ -1,9 +1,9 @@
-const zutool = require("zutool");
-const location = require("location");
-const lambda = require("lambda");
-const slack = require("slack");
-const temperature = require("temperature");
-const help = require("help");
+const zutool = require("./zutool");
+const location = require("./location");
+const lambda = require("./lambda");
+const slack = require("./slack");
+const temperature = require("./temperature");
+const help = require("./help");
 
 exports.handler = async (event, context, callback) => {
   const parsedBody = parseBody(lambda.getBody(event));

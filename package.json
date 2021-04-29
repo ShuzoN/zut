@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "zut": "node ./run-zut.js"
   },
   "repository": {
     "type": "git",
