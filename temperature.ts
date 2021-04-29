@@ -1,13 +1,15 @@
-export function diffMessage(json, isTomorrow) {
-  const daysMaxTemp = daysMax(json);
+import { DaysWeather, DayWeather } from "./Types/zutool";
+
+export function diffMessage(days: DaysWeather, isTomorrow: boolean) {
+  const daysMaxTemp = daysMax(days);
   const tempDiffLevel = isTomorrow
     ? inspectDifference(daysMaxTemp.today, daysMaxTemp.tomorrow)
     : inspectDifference(daysMaxTemp.yesterday, daysMaxTemp.today);
   return format(tempDiffLevel);
 }
 
-const inspectDifference = (before, after) => {
-  const difference = (a, b) => {
+const inspectDifference = (before: number, after: number): number => {
+  const difference = (a: number, b: number) => {
     return Math.abs(a - b);
   };
 
@@ -28,7 +30,7 @@ const inspectDifference = (before, after) => {
   return 0;
 };
 
-export const format = (diff) => {
+export const format = (diff: number) => {
   switch (diff) {
     case 0:
       return "";
@@ -43,21 +45,21 @@ export const format = (diff) => {
   }
 };
 
-const daysMax = (json) => {
+const daysMax = (days: DaysWeather) => {
   return {
-    yesterday: max(listTemperatureInADay(json.yesterday)),
-    today: max(listTemperatureInADay(json.today)),
-    tomorrow: max(listTemperatureInADay(json.tommorow)),
+    yesterday: max(listTemperatureInADay(days.yesterday)),
+    today: max(listTemperatureInADay(days.today)),
+    tomorrow: max(listTemperatureInADay(days.tommorow)),
   };
 };
 
-function listTemperatureInADay(day) {
+function listTemperatureInADay(day: DayWeather): number[] {
   return day.map((d) => {
     return d.temp;
   });
 }
 
-function max(dayTemp) {
+function max(dayTemp): number {
   return dayTemp.reduce(function (a, b) {
     return Math.max(a, b);
   });

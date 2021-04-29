@@ -7,7 +7,7 @@ import * as help from "./help";
 import { ParseBody, TODO } from "./Types/utils";
 import { LambdaBody } from "./Types/lambda";
 import { LocationIdResult } from "./Types/locations";
-import { LocationWeatherResponse } from "./Types/zutool";
+import { DaysWeather, LocationWeatherResponse } from "./Types/zutool";
 
 exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
   const parsedBody: ParseBody = parseBody(lambda.getBody(event));
@@ -26,9 +26,16 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
       // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
       const day = parsedBody.isTomorrow ? response.tommorow : response.today;
       const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
+      const daysWeather: DaysWeather = {
+        yesterday: response.yesterday,
+        today: response.today,
+        tommorow: response.tommorow,
+        dayAfterTommorow: response.dayaftertomorrow,
+      };
+
       const responseBody: string = `${dayStr} の天気
 ${zutool.formatter(day).join("\n")}
-${temperature.diffMessage(response, parsedBody.isTomorrow)}`;
+${temperature.diffMessage(daysWeather, parsedBody.isTomorrow)}`;
       return slack.buildResponse(responseBody);
     });
 };
