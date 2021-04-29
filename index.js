@@ -13,7 +13,7 @@ exports.handler = async (event, context, callback) => {
 
   const fetchLocation = parseBody.locationId
     ? { locationId: parseBody.locationId, errorMessage: null }
-    : await location.fetchLocationId(body.locationName);
+    : await location.fetchLocationId(parseBody.locationName);
 
   if (fetchLocation.errorMessage) {
     return slack.buildResponse(fetchLocation.errorMessage);
