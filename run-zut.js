@@ -19,5 +19,5 @@ const { handler } = require("./index");
     },
   });
 
-  console.log(JSON.stringify(response));
+  console.dir(response, { depth: null });
 })();
