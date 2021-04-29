@@ -1,9 +1,12 @@
 import * as https from "https";
 import * as weather from "./weather";
 import * as pressureLevel from "./pressure-level";
+import { TODO } from "./Types/utils";
 
-export const fetch = (locationId) => {
-  const url = encodeURI("https://zutool.jp/api/getweatherstatus/" + locationId);
+export const fetch = (locationId: number) => {
+  const url = encodeURI(
+    "https://zutool.jp/api/getweatherstatus/" + locationId.toString()
+  );
   console.info("url: " + url);
 
   return new Promise(function (resolve, reject) {
@@ -11,7 +14,7 @@ export const fetch = (locationId) => {
       .get(url, (res) => {
         res.on("data", (body) => resolve(JSON.parse(body)));
       })
-      .on("error", (e) => {
+      .on("error", (e: TODO) => {
         reject(Error(e));
       });
   });
