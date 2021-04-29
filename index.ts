@@ -26,7 +26,7 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
       // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
       const day = parsedBody.isTomorrow ? response.tommorow : response.today;
       const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
-      const responseBody = `${dayStr} の天気
+      const responseBody: string = `${dayStr} の天気
 ${zutool.formatter(day).join("\n")}
 ${temperatureDiffMessage(response, parsedBody.isTomorrow)}`;
       return slack.buildResponse(responseBody);
