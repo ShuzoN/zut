@@ -7,12 +7,12 @@ export const fetchLocationId = async (
   const searchResult = await search.byLocationName(locationName);
 
   if (searchResult.length > 1) {
-    const result = searchResult
+    const message = searchResult
       .map((r) => `${r.name}: ${r.city_code}`)
       .join("\n");
     return {
       errorMessage: `対象住所は複数該当します。天気表示は「市町村区名」のみ、または「city_code」で検索してください。
-${result}`,
+${message}`,
       locationId: null,
     };
   }
