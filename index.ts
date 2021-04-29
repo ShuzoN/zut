@@ -20,6 +20,10 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
     ? { locationId: parsedBody.locationId, errorMessage: null }
     : await location.fetchLocationId(parsedBody.locationName);
 
+  if (fetchLocation.errorMessage) {
+    return slack.buildResponse(fetchLocation.errorMessage);
+  }
+
   return await zutool
     .fetch(fetchLocation.locationId)
     .then((response: LocationWeatherResponse) => {
