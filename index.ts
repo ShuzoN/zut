@@ -28,18 +28,10 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
       const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
       const responseBody: string = `${dayStr} の天気
 ${zutool.formatter(day).join("\n")}
-${temperatureDiffMessage(response, parsedBody.isTomorrow)}`;
+${temperature.diffMessage(response, parsedBody.isTomorrow)}`;
       return slack.buildResponse(responseBody);
     });
 };
-
-function temperatureDiffMessage(json, isTomorrow) {
-  const daysMaxTemp = temperature.daysMax(json);
-  const tempDiffLevel = isTomorrow
-    ? temperature.inspectDifference(daysMaxTemp.today, daysMaxTemp.tomorrow)
-    : temperature.inspectDifference(daysMaxTemp.yesterday, daysMaxTemp.today);
-  return temperature.format(tempDiffLevel);
-}
 
 function parseBody(body: LambdaBody): ParseBody {
   const args = body.text.split(" ");

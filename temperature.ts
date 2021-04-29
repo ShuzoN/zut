@@ -1,4 +1,12 @@
-export const inspectDifference = (before, after) => {
+export function diffMessage(json, isTomorrow) {
+  const daysMaxTemp = daysMax(json);
+  const tempDiffLevel = isTomorrow
+    ? inspectDifference(daysMaxTemp.today, daysMaxTemp.tomorrow)
+    : inspectDifference(daysMaxTemp.yesterday, daysMaxTemp.today);
+  return format(tempDiffLevel);
+}
+
+const inspectDifference = (before, after) => {
   const difference = (a, b) => {
     return Math.abs(a - b);
   };
@@ -35,7 +43,7 @@ export const format = (diff) => {
   }
 };
 
-export const daysMax = (json) => {
+const daysMax = (json) => {
   return {
     yesterday: max(listTemperatureInADay(json.yesterday)),
     today: max(listTemperatureInADay(json.today)),
