@@ -2,8 +2,11 @@ import * as https from "https";
 import * as weather from "./weather";
 import * as pressureLevel from "./pressure-level";
 import { TODO } from "./Types/utils";
+import { LocationWeatherResponse } from "./Types/zutool";
 
-export const fetch = (locationId: number) => {
+export const fetch = async (
+  locationId: number
+): Promise<LocationWeatherResponse> => {
   const url = encodeURI(
     "https://zutool.jp/api/getweatherstatus/" + locationId.toString()
   );

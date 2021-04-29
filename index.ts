@@ -7,6 +7,7 @@ import * as help from "./help";
 import { ParseBody, TODO } from "./Types/utils";
 import { LambdaBody } from "./Types/lambda";
 import { LocationIdResult } from "./Types/locations";
+import { LocationWeatherResponse } from "./Types/zutool";
 
 exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
   const parsedBody: ParseBody = parseBody(lambda.getBody(event));
@@ -15,19 +16,21 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
     return slack.buildResponse(help.message);
   }
 
-  const fetchLocation = parsedBody.locationId
+  const fetchLocation: LocationIdResult = parsedBody.locationId
     ? { locationId: parsedBody.locationId, errorMessage: null }
     : await location.fetchLocationId(parsedBody.locationName);
 
-  return await zutool.fetch(fetchLocation.locationId).then((response) => {
-    // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
-    const day = parsedBody.isTomorrow ? response.tommorow : response.today;
-    const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
-    const responseBody = `${dayStr} の天気
+  return await zutool
+    .fetch(fetchLocation.locationId)
+    .then((response: LocationWeatherResponse) => {
+      // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
+      const day = parsedBody.isTomorrow ? response.tommorow : response.today;
+      const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
+      const responseBody = `${dayStr} の天気
 ${zutool.formatter(day).join("\n")}
 ${temperatureDiffMessage(response, parsedBody.isTomorrow)}`;
-    return slack.buildResponse(responseBody);
-  });
+      return slack.buildResponse(responseBody);
+    });
 };
 
 function temperatureDiffMessage(json, isTomorrow) {
