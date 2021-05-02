@@ -30,13 +30,13 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
       const daysWeather: DaysWeather = {
         yesterday: response.yesterday,
         today: response.today,
-        tommorow: response.tommorow,
-        dayAfterTommorow: response.dayaftertomorrow,
+        tomorrow: response.tommorow,
+        dayAfterTomorrow: response.dayaftertomorrow,
       };
 
       // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
       const day = parsedBody.isTomorrow
-        ? daysWeather.tommorow
+        ? daysWeather.tomorrow
         : daysWeather.today;
       const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
 

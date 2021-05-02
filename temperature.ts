@@ -1,4 +1,4 @@
-import { DaysWeather, DayWeather } from "./Types/zutool";
+import { DaysWeather, DayWeather, HourWeather } from "./Types/zutool";
 
 export function diffMessage(days: DaysWeather, isTomorrow: boolean) {
   const daysMaxTemp = daysMax(days);
@@ -49,17 +49,17 @@ export const daysMax = (days: DaysWeather) => {
   return {
     yesterday: max(listTemperatureInADay(days.yesterday)),
     today: max(listTemperatureInADay(days.today)),
-    tomorrow: max(listTemperatureInADay(days.tommorow)),
+    tomorrow: max(listTemperatureInADay(days.tomorrow)),
   };
 };
 
 function listTemperatureInADay(day: DayWeather): number[] {
-  return day.map((d) => {
-    return d.temp;
+  return day.map((h: HourWeather) => {
+    return Number(h.temp);
   });
 }
 
-function max(dayTemp): number {
+function max(dayTemp: number[]): number {
   return dayTemp.reduce(function (a, b) {
     return Math.max(a, b);
   });
