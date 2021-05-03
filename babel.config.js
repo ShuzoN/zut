@@ -7,8 +7,6 @@ module.exports = {
           node: "current",
         },
       },
-      "@babel/preset-flow",
     ],
   ],
-  plugins: ["@babel/plugin-syntax-flow"],
 };

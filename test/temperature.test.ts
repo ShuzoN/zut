@@ -1,4 +1,4 @@
-import * as temperature from "../temperature";
+import * as temperature from "../src/temperature";
 
 test("昨日、今日、明日の最高気温を取得する", () => {
   const expected = {

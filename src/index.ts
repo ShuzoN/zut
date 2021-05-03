@@ -5,9 +5,9 @@ import * as slack from "./slack";
 import * as temperature from "./temperature";
 import * as help from "./help";
 import { ParseBody, TODO } from "./Types/utils";
-import { LambdaBody } from "./Types/lambda";
 import { LocationIdResult } from "./Types/locations";
 import { DaysWeather, LocationWeatherResponse } from "./Types/zutool";
+import { LambdaBody } from "./Types/lambda";
 
 exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
   try {

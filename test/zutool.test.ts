@@ -1,4 +1,4 @@
-import * as zutool from "../zutool";
+import * as zutool from "../src/zutool";
 
 test("zutoolから受け取ったjsonを当日分についてフォーマットできること", () => {
   const formatted = [

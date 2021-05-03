@@ -1,4 +1,4 @@
-import * as lambda from "../lambda";
+import * as lambda from "../src/lambda";
 
 test("lambdaに送信されるeventからbodyをobjectとして取り出せること", () => {
   const event = {

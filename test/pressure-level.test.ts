@@ -1,4 +1,4 @@
-import * as pressureLevel from "../pressure-level";
+import * as pressureLevel from "../src/pressure-level";
 
 test("警戒度に対応した数値を入力したとき、警戒度アイコンを返すこと", () => {
   expect(pressureLevel.get("0")).toBe(":ok:");
