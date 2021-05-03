@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "allowJs": true,
     "outDir": "./dist",
@@ -8,6 +8,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "dom.iterable"
+    ]
   },
   "include": [
     "./*.ts",
