@@ -12,7 +12,7 @@ export const byLocationName = async (
   return JSON.parse(unescaped);
 };
 
-const unescape = (json: string) => {
+export const unescape = (json: string) => {
   const excludeDoubleQuote = json.replace('\\"', '"');
   return excludeDoubleQuote.replace(/\\\\/g, "\\");
 };
