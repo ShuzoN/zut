@@ -1,4 +1,4 @@
-exports.handler = async () => {
+export const handler = async () => {
   console.log("hello");
   return "hello";
 };
