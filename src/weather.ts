@@ -1,4 +1,4 @@
-export const get = (weatherType) => {
+export const get = (weatherType: string) => {
   if (weatherType === "100") {
     return ":sunny:";
   }

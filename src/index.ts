@@ -25,6 +25,12 @@ exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
       return slack.buildResponse(fetchLocation.errorMessage);
     }
 
+    if (fetchLocation.locationId === null) {
+      return slack.buildResponse(
+        "天気の場所を取得できませんでした。はじめからやり直してください。"
+      );
+    }
+
     return await zutool
       .fetch(fetchLocation.locationId)
       .then((response: LocationWeatherResponse) => {

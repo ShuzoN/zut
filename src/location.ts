@@ -2,7 +2,7 @@ import * as search from "./search";
 import { LocationIdResult } from "./Types/locations";
 
 export const fetchLocationId = async (
-  locationName
+  locationName: string
 ): Promise<LocationIdResult> => {
   const searchResult = await search.byLocationName(locationName);
 

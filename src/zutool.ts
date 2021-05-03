@@ -2,7 +2,12 @@ import * as https from "https";
 import * as weather from "./weather";
 import * as pressureLevel from "./pressure-level";
 import { TODO } from "./Types/utils";
-import { LocationWeatherResponse } from "./Types/zutool";
+import {
+  DayWeather,
+  HourWeather,
+  LocationSearchResponse,
+  LocationWeatherResponse,
+} from "./Types/zutool";
 
 export const fetch = async (
   locationId: number
@@ -23,7 +28,9 @@ export const fetch = async (
   });
 };
 
-export const search = (searchQuery) => {
+export const search = (
+  searchQuery: string
+): Promise<LocationSearchResponse> => {
   const url = encodeURI("https://zutool.jp/api/getweatherpoint/" + searchQuery);
 
   return new Promise(function (resolve, reject) {
@@ -31,15 +38,15 @@ export const search = (searchQuery) => {
       .get(url, (res) => {
         res.on("data", (body) => resolve(JSON.parse(body)));
       })
-      .on("error", (e) => {
+      .on("error", (e: TODO) => {
         reject(Error(e));
       });
   });
 };
 
-export const formatter = (day) => {
+export const formatter = (day: DayWeather) => {
   return day
-    .filter((h) => h.time > 5 && h.time < 24)
+    .filter((h: HourWeather) => Number(h.time) > 5 && Number(h.time) < 24)
     .map((h) => {
       return `${h.time}時 ${weather.get(h.weather)} ${h.temp}℃ ${
         h.pressure

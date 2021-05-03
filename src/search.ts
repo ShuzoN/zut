@@ -1,6 +1,9 @@
+import { SearchLocation } from "./Types/zutool";
 import * as zutool from "./zutool";
 
-export const byLocationName = async (locationName) => {
+export const byLocationName = async (
+  locationName: string
+): Promise<SearchLocation[]> => {
   if (locationName === "") {
     throw Error("検索文字列が指定されていません");
   }
@@ -9,7 +12,7 @@ export const byLocationName = async (locationName) => {
   return JSON.parse(unescaped);
 };
 
-const unescape = (json) => {
+const unescape = (json: string) => {
   const excludeDoubleQuote = json.replace('\\"', '"');
   return excludeDoubleQuote.replace(/\\\\/g, "\\");
 };

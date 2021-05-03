@@ -25,3 +25,13 @@ export type LocationWeatherResponse = {
   tommorow: DayWeather;
   dayaftertomorrow: DayWeather;
 };
+
+export type LocationSearchResponse = {
+  result: string;
+};
+
+export type SearchLocation = {
+  city_code: number;
+  name_kata: string;
+  name: string;
+};
