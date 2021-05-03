@@ -9,11 +9,16 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
+      "DOM",
       "dom.iterable"
     ]
   },
   "include": [
     "./*.ts",
     "./src/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts"
   ]
 }

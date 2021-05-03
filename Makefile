@@ -15,6 +15,9 @@ test: install
 zut: install
 	$(YARN) run zut ${ARG}
 
+zut/ts: install
+	$(YARN) run zut/ts ${ARG}
+
 build: install
 	$(YARN) build
 

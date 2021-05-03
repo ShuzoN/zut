@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest --config ./jest.config.js",
     "zut": "node ./run-zut.js",
+    "zut/ts": "ts-node ./run-zut.ts",
     "build": "tsc"
   },
   "repository": {
@@ -27,6 +28,7 @@
     "@types/jest": "^26.0.23",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
   }
 }
