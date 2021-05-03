@@ -15,3 +15,5 @@ test: install
 zut: install
 	 $(YARN) run zut ${ARG}
 
+build: install
+	$(YARN) build
