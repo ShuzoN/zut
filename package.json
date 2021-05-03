@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "zut": "node ./run-zut.js"
+    "test": "jest --config ./jest.config.js",
+    "zut": "node ./run-zut.js",
+    "zut/ts": "ts-node ./run-zut.ts",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,12 @@
   },
   "homepage": "https://github.com/ShuzoN/zut#readme",
   "devDependencies": {
-    "jest": "^26.6.1"
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.0",
+    "@types/jest": "^26.0.23",
+    "jest": "^26.6.1",
+    "ts-jest": "^26.5.5",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
   }
 }
