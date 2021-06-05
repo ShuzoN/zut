@@ -41,7 +41,6 @@ export const handler = async (event: TODO) => {
           dayAfterTomorrow: response.dayaftertomorrow,
         };
 
-        // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
         const day = parsedBody.isTomorrow
           ? daysWeather.tomorrow
           : daysWeather.today;
