@@ -29,5 +29,5 @@ jobs:
           aws-region: ap-northeast-1
 
       - name: Move files to the production s3
-      run: |
-        make deploy
+        run: |
+          make deploy
