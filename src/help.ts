@@ -1,4 +1,4 @@
-exports.message = `/zut 場所　(--tomorrow)
+export const message = `/zut 場所　(--tomorrow)
 対応する地名が複数ある場合は地名とcity_codeを表示します。
 天気表示は「市町村区名」のみ入力するのがコツです。
 フルネームで入れると動きません。

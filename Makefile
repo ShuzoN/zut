@@ -4,17 +4,17 @@ ARG=
 
 .PHONY: zip install test zut zut/ts build
 
-install: 
+install:
 	$(YARN) install
 
-zip: 
+zip:
 	$(ZIP) -r zut.zip .
 
 test: install
-	 $(YARN) test
+	$(YARN) test
 
 zut: install
-	 $(YARN) run zut ${ARG}
+	$(YARN) run zut ${ARG}
 
 zut/ts: install
 	$(YARN) run zut/ts ${ARG}

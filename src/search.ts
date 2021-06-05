@@ -1,15 +1,18 @@
-const zutool = require("./zutool");
+import { SearchLocation } from "./Types/zutool";
+import * as zutool from "./zutool";
 
-exports.byLocationName = async function (locationName) {
+export const byLocationName = async (
+  locationName: string
+): Promise<SearchLocation[]> => {
   if (locationName === "") {
     throw Error("検索文字列が指定されていません");
   }
   const locationResponse = await zutool.search(locationName);
-  const unescaped = this.unescape(locationResponse.result);
+  const unescaped = unescape(locationResponse.result);
   return JSON.parse(unescaped);
 };
 
-exports.unescape = (json) => {
+export const unescape = (json: string) => {
   const excludeDoubleQuote = json.replace('\\"', '"');
   return excludeDoubleQuote.replace(/\\\\/g, "\\");
 };

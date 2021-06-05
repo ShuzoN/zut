@@ -1,4 +1,4 @@
-const temperature = require("../temperature");
+import * as temperature from "../src/temperature";
 
 test("昨日、今日、明日の最高気温を取得する", () => {
   const expected = {
@@ -7,7 +7,14 @@ test("昨日、今日、明日の最高気温を取得する", () => {
     tomorrow: 19.5,
   };
 
-  expect(temperature.daysMax(zutoolJson)).toEqual(expected);
+  expect(
+    temperature.daysMax({
+      yesterday: zutoolJson.yesterday,
+      today: zutoolJson.today,
+      tomorrow: zutoolJson.tommorow,
+      dayAfterTomorrow: zutoolJson.dayaftertomorrow,
+    })
+  ).toEqual(expected);
 });
 
 test("昨日、今日の気温差が5度以下の場合は0が返ること", () => {
@@ -138,6 +145,29 @@ const zutoolJson = {
     },
   ],
   tommorow: [
+    {
+      time: "0",
+      weather: "100",
+      temp: "8",
+      pressure: "1011.7",
+      pressure_level: "1",
+    },
+    {
+      time: "1",
+      weather: "100",
+      temp: "19.5",
+      pressure: "1013.5",
+      pressure_level: "0",
+    },
+    {
+      time: "2",
+      weather: "100",
+      temp: "9.7",
+      pressure: "1013.9",
+      pressure_level: "4",
+    },
+  ],
+  dayaftertomorrow: [
     {
       time: "0",
       weather: "100",

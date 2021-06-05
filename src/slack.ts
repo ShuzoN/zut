@@ -1,4 +1,4 @@
-exports.buildResponse = function (body) {
+export const buildResponse = (body: string) => {
   return {
     response_type: "in_channel",
     blocks: [
