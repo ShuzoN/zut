@@ -75,5 +75,5 @@ function parseBody(body: LambdaBody): ParseBody {
   const locationName = !gotLocationId ? args[0] : "";
   const isTomorrow = args[1] ? args[1].includes("--tomorrow") : false;
 
-  return { isHelp, gotLocationId, locationId, locationName, isTomorrow };
+  return { isHelp, locationId, locationName, isTomorrow };
 }
