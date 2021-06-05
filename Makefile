@@ -9,7 +9,7 @@ install:
 	$(YARN) install
 
 zip:
-	$(ZIP) -r zut.zip ./dist/src
+	cd ./dist/src && $(ZIP) -r zut.zip ./ && mv ./zut.zip ../../
 
 test: install
 	$(YARN) test
