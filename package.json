@@ -21,8 +21,6 @@
   "homepage": "https://github.com/ShuzoN/zut#readme",
   "devDependencies": {
     "@babel/core": "^7.13.16",
-    "@babel/plugin-syntax-flow": "^7.12.13",
-    "@babel/plugin-transform-flow-strip-types": "^7.13.0",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-flow": "^7.13.13",
     "@types/jest": "^26.0.23",
