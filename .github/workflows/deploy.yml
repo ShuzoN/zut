@@ -19,10 +19,15 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: ${{ matrix.node-version }}
-      - run: make install test
-      - uses: actions/aws/cli@master
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ZUT_PUT_S3_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.ZUT_PUT_S3_AWS_SECRET_ACCESS_KEY }}
+        run: make install test
+
+      - name: Configure AWS credentials from zut-deploy
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: make deploy
+          aws-access-key-id: ${{ secrets.ZUT_PUT_S3_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.ZUT_PUT_S3_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Move files to the production s3
+      run:
+        make deploy
