@@ -9,7 +9,7 @@ import { LocationIdResult } from "./Types/locations";
 import { DaysWeather, LocationWeatherResponse } from "./Types/zutool";
 import { LambdaBody } from "./Types/lambda";
 
-exports.handler = async (event: TODO, context: TODO, callback: TODO) => {
+export const handler = async (event: TODO) => {
   try {
     const parsedBody: ParseBody = parseBody(lambda.getBody(event));
 

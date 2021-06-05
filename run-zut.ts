@@ -4,12 +4,12 @@
  * $ yarn run zut 港区 --tomorrow
  * ```
  */
-const { handler } = require("./index");
+import * as src from "./src/index";
 
 (async () => {
   const [, , ...textArray] = process.argv;
 
-  const response = await handler({
+  const response = await src.handler({
     "body-json": {
       body: new URLSearchParams({
         token: "token",
