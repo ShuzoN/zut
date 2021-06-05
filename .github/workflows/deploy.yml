@@ -32,3 +32,7 @@ jobs:
       - name: Move files to the production s3
         run: |
           make deploy
+
+      - name: Deploy lambda
+        run: |
+          aws lambda update-function-code --function-name zut2 --s3-bucket zut --s3-key zut.zip
