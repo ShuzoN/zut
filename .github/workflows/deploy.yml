@@ -19,7 +19,8 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: ${{ matrix.node-version }}
-        run: make install test
+
+      - run: make install test
 
       - name: Configure AWS credentials from zut-deploy
         uses: aws-actions/configure-aws-credentials@v1
