@@ -1,5 +1,6 @@
 ZIP=$(shell which zip)
 YARN=$(shell which yarn)
+AWS=$(shell which aws)
 ARG=
 
 .PHONY: zip install test zut zut/ts build
@@ -8,7 +9,7 @@ install:
 	$(YARN) install
 
 zip:
-	$(ZIP) -r zut.zip .
+	$(ZIP) -r zut.zip ./dist/src
 
 test: install
 	$(YARN) test
@@ -21,3 +22,6 @@ zut/ts: install
 
 build: install
 	$(YARN) build
+
+deploy: build zip
+	$(AWS) s3 mv zut.zip s3://zut
