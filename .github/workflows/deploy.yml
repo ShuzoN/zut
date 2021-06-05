@@ -1,0 +1,28 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: make install test
+      - uses: actions/aws/cli@master
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ZUT_PUT_S3_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ZUT_PUT_S3_AWS_SECRET_ACCESS_KEY }}
+        with:
+          args: make deploy
