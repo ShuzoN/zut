@@ -35,4 +35,4 @@ jobs:
 
       - name: Deploy lambda
         run: |
-          aws lambda update-function-code --function-name zut2 --s3-bucket zut --s3-key zut.zip
+          aws lambda update-function-code --function-name zut --s3-bucket zut --s3-key zut.zip
