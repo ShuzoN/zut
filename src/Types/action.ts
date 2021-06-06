@@ -1,3 +1,3 @@
 export interface ActionInterface {
-  exec: () => string;
+  exec: () => Promise<string>;
 }

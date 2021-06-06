@@ -22,7 +22,7 @@ export class Router implements RouterInterface {
       case "help":
         return new HelpAction();
       case "weather":
-        return new WeatherAction();
+        return new WeatherAction(this.body);
       default:
         return new HelpAction();
     }
