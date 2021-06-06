@@ -16,9 +16,18 @@ export const handler = async (event: TODO) => {
     /*
       const parsedBody: ParseBody = parseBody(lambda.getBody(event));
       const router = new Router(parsedBody);
-      const process = router.judge();
-      const responseBody = process.exec();
+      const action = router.judge();
+      const responseBody = action.exec();
       return slack.buildResponse(responseBody);
+
+      switch(action) {
+        case action.help:
+          return new helpProcess();
+        case action.weather:
+          return new WeatherProcess();
+        default:
+          return new helpProcess();
+      }
     */
 
     if (parsedBody.isHelp) {
