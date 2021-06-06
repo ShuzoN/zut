@@ -1,65 +1,16 @@
-import * as zutool from "./zutool";
-import * as location from "./location";
 import * as lambda from "./lambda";
 import * as slack from "./slack";
-import * as temperature from "./temperature";
-import * as help from "./help";
 import { ParseBody, TODO } from "./Types/utils";
-import { LocationIdResult } from "./Types/locations";
-import { DaysWeather, LocationWeatherResponse } from "./Types/zutool";
 import { LambdaBody } from "./Types/lambda";
+import { Router } from "./router";
 
 export const handler = async (event: TODO) => {
   try {
     const parsedBody: ParseBody = parseBody(lambda.getBody(event));
-
-    /*
-      const parsedBody: ParseBody = parseBody(lambda.getBody(event));
-      const router = new Router(parsedBody);
-      const action = router.judge();
-      const responseBody = action.exec();
-      return slack.buildResponse(responseBody);
-    */
-
-    if (parsedBody.isHelp) {
-      return slack.buildResponse(help.message);
-    }
-
-    const fetchLocation: LocationIdResult = parsedBody.locationId
-      ? { locationId: parsedBody.locationId, errorMessage: null }
-      : await location.fetchLocationId(parsedBody.locationName);
-
-    if (fetchLocation.errorMessage) {
-      return slack.buildResponse(fetchLocation.errorMessage);
-    }
-
-    if (fetchLocation.locationId === null) {
-      return slack.buildResponse(
-        "天気の場所を取得できませんでした。はじめからやり直してください。"
-      );
-    }
-
-    return await zutool
-      .fetch(fetchLocation.locationId)
-      .then((response: LocationWeatherResponse) => {
-        const daysWeather: DaysWeather = {
-          yesterday: response.yesterday,
-          today: response.today,
-          tomorrow: response.tommorow,
-          dayAfterTomorrow: response.dayaftertomorrow,
-        };
-
-        const day = parsedBody.isTomorrow
-          ? daysWeather.tomorrow
-          : daysWeather.today;
-        const dayStr = parsedBody.isTomorrow ? "明日" : "今日";
-
-        const responseBody: string = `${dayStr} の天気
-${zutool.formatter(day).join("\n")}
-${temperature.diffMessage(daysWeather, parsedBody.isTomorrow)}`;
-
-        return slack.buildResponse(responseBody);
-      });
+    const router = new Router(parsedBody);
+    const action = router.judge();
+    const responseBody = await action.exec();
+    return slack.buildResponse(responseBody);
   } catch (e) {
     return slack.buildResponse(e);
   }
