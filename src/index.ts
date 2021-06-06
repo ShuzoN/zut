@@ -13,6 +13,14 @@ export const handler = async (event: TODO) => {
   try {
     const parsedBody: ParseBody = parseBody(lambda.getBody(event));
 
+    /*
+      const parsedBody: ParseBody = parseBody(lambda.getBody(event));
+      const router = new Router(parsedBody);
+      const process = router.judge();
+      const responseBody = process.exec();
+      return slack.buildResponse(responseBody);
+    */
+
     if (parsedBody.isHelp) {
       return slack.buildResponse(help.message);
     }
