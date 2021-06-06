@@ -1,5 +1,5 @@
-import { ActionInterface } from "../Types/action";
+import { Action } from "../Types/action";
 
-export class HelpAction implements ActionInterface {
+export class HelpAction implements Action {
   exec: () => {};
 }
