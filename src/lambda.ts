@@ -1,5 +1,5 @@
 import { LambdaBody } from "./Types/lambda";
-import { TODO } from "./Types/utils";
+import { ParseBody, TODO } from "./Types/utils";
 import { URLSearchParams } from "url";
 
 export const getBody = (event: TODO): LambdaBody => {
