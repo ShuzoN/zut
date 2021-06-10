@@ -17,7 +17,7 @@ export class WeatherAction implements ActionInterface {
     this.isTomorrow = body.isTomorrow;
   }
 
-  exec = async () => {
+  async exec() {
     const fetchLocation: LocationIdResult = this.locationId
       ? { locationId: this.locationId, errorMessage: null }
       : await location.fetchLocationId(this.locationName);
@@ -49,5 +49,5 @@ ${temperature.diffMessage(daysWeather, this.isTomorrow)}`;
 
         return responseBody;
       });
-  };
+  }
 }
