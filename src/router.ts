@@ -16,7 +16,7 @@ export class Router implements RouterInterface {
   }
 
   judge() {
-    const actions = this.actions();
+    const actions = this.action();
 
     switch (actions) {
       case "help":
@@ -28,11 +28,11 @@ export class Router implements RouterInterface {
     }
   }
 
-  private actions: () => ActionsType = () => {
+  private action(): ActionsType {
     if (this.body.isHelp) {
       return "help";
     }
 
     return "weather";
-  };
+  }
 }
