@@ -15,7 +15,7 @@ export class Router implements RouterInterface {
     this.body = body;
   }
 
-  judge = () => {
+  judge() {
     const actions = this.actions();
 
     switch (actions) {
@@ -26,7 +26,7 @@ export class Router implements RouterInterface {
       default:
         return new HelpAction();
     }
-  };
+  }
 
   private actions: () => ActionsType = () => {
     if (this.body.isHelp) {
