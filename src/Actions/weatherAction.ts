@@ -7,7 +7,7 @@ import { DaysWeather, LocationWeatherResponse } from "../Types/zutool";
 import { LocationIdResult } from "../Types/locations";
 
 export class WeatherAction implements ActionInterface {
-  readonly locationId: number | null;
+  readonly locationId: string | null;
   readonly locationName: string;
   readonly isTomorrow: boolean;
 

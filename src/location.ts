@@ -26,6 +26,6 @@ ${message}`,
 
   return {
     errorMessage: null,
-    locationId: searchResult[0].city_code,
+    locationId: searchResult[0].city_code.toString(),
   };
 };

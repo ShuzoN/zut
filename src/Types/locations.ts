@@ -1,4 +1,4 @@
 export type LocationIdResult = {
   errorMessage: string | null;
-  locationId: number | null;
+  locationId: string | null;
 };
