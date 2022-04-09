@@ -31,7 +31,7 @@ export type LocationSearchResponse = {
 };
 
 export type SearchLocation = {
-  city_code: number;
+  city_code: string;
   name_kata: string;
   name: string;
 };

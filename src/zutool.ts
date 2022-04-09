@@ -10,11 +10,9 @@ import {
 } from "./Types/zutool";
 
 export const fetch = async (
-  locationId: number
+  locationId: string
 ): Promise<LocationWeatherResponse> => {
-  const url = encodeURI(
-    "https://zutool.jp/api/getweatherstatus/" + locationId.toString()
-  );
+  const url = encodeURI("https://zutool.jp/api/getweatherstatus/" + locationId);
   console.info("url: " + url);
 
   return new Promise(function (resolve, reject) {
