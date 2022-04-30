@@ -7,7 +7,7 @@ export const byLocationName = async (
   if (locationName === "") {
     throw Error("検索文字列が指定されていません");
   }
-  const locationResponse = await zutool.search(locationName);
+  const locationResponse = await zutool.search(locationName.trim());
   const unescaped = unescape(locationResponse.result);
   return JSON.parse(unescaped);
 };
