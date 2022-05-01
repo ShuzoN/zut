@@ -11,5 +11,5 @@ $ make zip
 ### ローカルで/zutを動かす
 
 ```
-$ make zut ARG="港区 --tomorrow"
+$ make zut/ts ARG="港区 --tomorrow"
 ```
