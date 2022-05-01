@@ -33,8 +33,8 @@ npm manifest:
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "jest",
-      "zut": "node ./run-zut.js",
+      "test": "jest --config ./jest.config.js",
+      "zut/ts": "ts-node ./run-zut.ts",
       "build": "tsc"
     },
     "repository": {

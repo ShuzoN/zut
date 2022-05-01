@@ -3,7 +3,7 @@ YARN=$(shell which yarn)
 AWS=$(shell which aws)
 ARG=
 
-.PHONY: zip install test zut zut/ts build
+.PHONY: zip install test zut/ts build
 
 install:
 	$(YARN) install
@@ -13,9 +13,6 @@ zip:
 
 test: install
 	$(YARN) test
-
-zut: install
-	$(YARN) run zut ${ARG}
 
 zut/ts: install
 	$(YARN) run zut/ts ${ARG}

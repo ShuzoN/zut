@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --config ./jest.config.js",
-    "zut": "node ./run-zut.js",
     "zut/ts": "ts-node ./run-zut.ts",
     "build": "tsc"
   },
