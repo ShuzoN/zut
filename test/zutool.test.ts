@@ -22,10 +22,7 @@ test("zutoolから受け取ったjsonを当日分についてフォーマット�
     "23時 :sunny: 12.8℃ 1023.6hPa :arrow_heading_down:",
   ];
 
-  expect(zutool.formatter(zutoolJson.today)).toEqual(
-    expect.arrayContaining(formatted)
-  );
-  expect(formatted).toEqual(
+  expect(formatted).toStrictEqual(
       expect.arrayContaining(zutool.formatter(zutoolJson.today))
   );
 });
