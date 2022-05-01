@@ -17,4 +17,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: make install test
-      - run: make zut/ts ARGS="　01101　"
+      - run: make zut/ts ARG="　01101　"
