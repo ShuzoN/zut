@@ -53,7 +53,7 @@ test("zutoolから受け取ったjsonを明日分についてフォーマット�
   ];
 
   // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
-  expect(zutool.formatter(zutoolJson.tommorow)).toEqual(
+  expect(zutool.formatter(zutoolJson.tommorow)).toStrictEqual(
     expect.arrayContaining(formatted)
   );
   expect(formatted).toEqual(
