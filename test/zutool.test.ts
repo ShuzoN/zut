@@ -52,9 +52,8 @@ test("zutoolから受け取ったjsonを明日分についてフォーマット�
     "23時 :sunny: 9.7℃ 1013.9hPa :bomb:",
   ];
 
-  // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
-  expect(zutool.formatter(zutoolJson.tommorow)).toStrictEqual(
-    expect.arrayContaining(formatted)
+  expect(formatted).toStrictEqual(
+      expect.arrayContaining(zutool.formatter(zutoolJson.tommorow))
   );
 });
 
