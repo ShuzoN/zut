@@ -56,9 +56,6 @@ test("zutoolから受け取ったjsonを明日分についてフォーマット�
   expect(zutool.formatter(zutoolJson.tommorow)).toStrictEqual(
     expect.arrayContaining(formatted)
   );
-  expect(formatted).toEqual(
-      expect.arrayContaining(zutool.formatter(zutoolJson.tommorow))
-  );
 });
 
 const zutoolJson = {
