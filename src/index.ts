@@ -11,7 +11,7 @@ export const handler = async (event: TODO) => {
     const action = router.judge();
     const responseBody = await action.exec();
     return slack.buildResponse(responseBody);
-  } catch (e) {
+  } catch (e: any) {
     return slack.buildResponse(e);
   }
 };
