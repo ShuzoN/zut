@@ -17,6 +17,14 @@ test("zutoolに対して場所検索を行えること", async () => {
   expect(actual).toEqual(expected);
 });
 
+test("zutoolに対して場所の文字列前後に全角スペースを入れても場所検索を行えること", async () => {
+  const actual = await search.byLocationName("　杉並　");
+  const expected = [
+    { city_code: "13115", name_kata: "ｽｷﾞﾅﾐｸ", name: "東京都杉並区" },
+  ];
+  expect(actual).toEqual(expected);
+});
+
 test("zutoolに対して空文字で検索した場合, 例外が返ること", () => {
   const promise = search.byLocationName("");
   expect(promise).rejects.toThrowError(
