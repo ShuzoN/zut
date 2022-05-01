@@ -1,4 +1,4 @@
-exports.get = function (pressureLevelType) {
+export const get = (pressureLevelType: string): string => {
   if (pressureLevelType === "0") {
     return ":ok:";
   }

@@ -7,3 +7,9 @@ $ make zip
 ```
 
 で圧縮したファイルをzipであげると動くよ
+
+### ローカルで/zutを動かす
+
+```
+$ make zut ARG="港区 --tomorrow"
+```
