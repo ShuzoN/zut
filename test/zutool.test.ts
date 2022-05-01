@@ -2,6 +2,8 @@ import * as zutool from "../src/zutool";
 
 test("zutoolから受け取ったjsonを当日分についてフォーマットできること", () => {
   const formatted = [
+    "6時 :sunny: 7.3℃ 1027.7hPa :ok:",
+    "7時 :sunny: 9.3℃ 1027.9hPa :ok:",
     "8時 :sunny: 11.1℃ 1028.7hPa :ok:",
     "9時 :sunny: 13.6℃ 1028.1hPa :warning:",
     "10時 :sunny: 14.6℃ 1027.6hPa :warning:",
@@ -22,6 +24,9 @@ test("zutoolから受け取ったjsonを当日分についてフォーマット�
 
   expect(zutool.formatter(zutoolJson.today)).toEqual(
     expect.arrayContaining(formatted)
+  );
+  expect(formatted).toEqual(
+      expect.arrayContaining(zutool.formatter(zutoolJson.today))
   );
 });
 
@@ -47,8 +52,8 @@ test("zutoolから受け取ったjsonを明日分についてフォーマット�
     "23時 :sunny: 9.7℃ 1013.9hPa :bomb:",
   ];
 
-  //notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
-  expect(zutool.formatter(zutoolJson.tommorow)).toEqual(
+  // notice: zutoolのtomorrowの綴りが間違っているのでそちらに合わせています
+  expect(zutool.formatter(zutoolJson.tommorow)).toStrictEqual(
     expect.arrayContaining(formatted)
   );
 });
