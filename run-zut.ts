@@ -1,6 +1,6 @@
 /**
  * ```shell
- * $ node run-zut.js 港区 --tomorrow
+ * $ ts-node run-zut.ts 港区 --tomorrow
  * $ yarn run zut 港区 --tomorrow
  * ```
  */
