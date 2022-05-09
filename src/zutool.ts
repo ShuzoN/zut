@@ -18,7 +18,9 @@ export const fetch = async (
   return new Promise(function (resolve, reject) {
     https
       .get(url, (res) => {
-        res.on("data", (body) => resolve(JSON.parse(body)));
+        let body = '';
+        res.on('data', (chunk) => body += chunk);
+        res.on('end', () => resolve(JSON.parse(body)));
       })
       .on("error", (e: TODO) => {
         reject(Error(e));
@@ -34,7 +36,9 @@ export const search = (
   return new Promise(function (resolve, reject) {
     https
       .get(url, (res) => {
-        res.on("data", (body) => resolve(JSON.parse(body)));
+        let body = '';
+        res.on('data', (chunk) => body += chunk);
+        res.on('end', () => resolve(JSON.parse(body)));
       })
       .on("error", (e: TODO) => {
         reject(Error(e));
