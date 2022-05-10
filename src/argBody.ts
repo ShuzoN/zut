@@ -2,12 +2,13 @@ import { LambdaBody } from "./Types/lambda";
 import { ParseBody } from "./Types/utils";
 
 export const parse = (body: LambdaBody): ParseBody => {
-  const args = body.text?.split(" ");
-  if (args === undefined) {
+  if (body.text === undefined) {
     throw new Error(
       "引数が正しく渡されていません。もう一度helpを見てください。"
     );
   }
+
+  const args = body.text?.split(" ");
 
   // 引数がないもしくは'--'が入ってるときはhelp
   const isHelp = args[0] === "" || args[0].includes("--");
