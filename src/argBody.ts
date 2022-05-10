@@ -8,6 +8,10 @@ export const parse = (body: LambdaBody): ParseBody => {
     );
   }
 
+  if (body.text?.match(/.*\u3000.*/g) !== null) {
+    throw new Error("全角スペースが含まれています。引数から削除してください。");
+  }
+
   const args = body.text?.split(" ");
 
   // 引数がないもしくは'--'が入ってるときはhelp
