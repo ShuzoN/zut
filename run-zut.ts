@@ -10,13 +10,12 @@ import * as src from "./src/index";
   const [, , ...textArray] = process.argv;
 
   const response = await src.handler({
-    "body-json": {
-      body: new URLSearchParams({
-        token: "token",
-        command: "/zut",
-        text: textArray.join(" "),
-      }).toString(),
-    },
+    body: new URLSearchParams({
+      token: "token",
+      command: "/zut",
+      text: textArray.join(" "),
+    }).toString(),
+    isBase64Encoded: false,
   });
 
   console.dir(response, { depth: null });
