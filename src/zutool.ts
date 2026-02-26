@@ -9,6 +9,8 @@ import {
   LocationWeatherResponse,
 } from "./Types/zutool";
 
+const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
+
 export const fetch = async (
   locationId: string
 ): Promise<LocationWeatherResponse> => {
@@ -17,10 +19,16 @@ export const fetch = async (
 
   return new Promise(function (resolve, reject) {
     https
-      .get(url, (res) => {
+      .get(url, { headers: { "User-Agent": UA } }, (res) => {
         let body = '';
         res.on('data', (chunk) => body += chunk);
-        res.on('end', () => resolve(JSON.parse(body)));
+        res.on('end', () => {
+          if (res.statusCode !== 200) {
+            reject(Error(`API returned status ${res.statusCode}: ${body}`));
+            return;
+          }
+          resolve(JSON.parse(body));
+        });
       })
       .on("error", (e: TODO) => {
         reject(Error(e));
@@ -35,10 +43,16 @@ export const search = (
 
   return new Promise(function (resolve, reject) {
     https
-      .get(url, (res) => {
+      .get(url, { headers: { "User-Agent": UA } }, (res) => {
         let body = '';
         res.on('data', (chunk) => body += chunk);
-        res.on('end', () => resolve(JSON.parse(body)));
+        res.on('end', () => {
+          if (res.statusCode !== 200) {
+            reject(Error(`API returned status ${res.statusCode}: ${body}`));
+            return;
+          }
+          resolve(JSON.parse(body));
+        });
       })
       .on("error", (e: TODO) => {
         reject(Error(e));
